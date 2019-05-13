@@ -1,5 +1,5 @@
 package dao;
 
-import modelo.Consulta;
+import modelo.Medico;
 
-public class DaoConsulta extends DaoGenerico<Consulta, Integer> {}
+public class DaoMedico extends DaoGenerico<Medico, Integer> {}
