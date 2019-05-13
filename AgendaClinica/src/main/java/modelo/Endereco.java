@@ -1,5 +1,6 @@
 package modelo;
 
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -14,6 +15,19 @@ import javax.persistence.Transient;
 
 @Entity
 public class Endereco {
+
+    public Endereco(Integer codigo, String rua, String bairro, String cidade, Integer numero, String cep, String complemento) {
+        this.codigo = codigo;
+        this.rua = rua;
+        this.bairro = bairro;
+        this.cidade = cidade;
+        this.numero = numero;
+        this.cep = cep;
+        this.complemento = complemento;
+    }
+
+    public Endereco() {
+    }
     
     // Constantes contendo o tamanho das colunas no banco de dados
     @Transient
@@ -53,4 +67,91 @@ public class Endereco {
 
     @Column(name = "end_complemento", length = TAMANHO_COMPLEMENTO)
     private String complemento;
+
+    public Integer getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(Integer codigo) {
+        this.codigo = codigo;
+    }
+
+    public String getRua() {
+        return rua;
+    }
+
+    public void setRua(String rua) {
+        this.rua = rua;
+    }
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public Integer getNumero() {
+        return numero;
+    }
+
+    public void setNumero(Integer numero) {
+        this.numero = numero;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 23 * hash + Objects.hashCode(this.codigo);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Endereco other = (Endereco) obj;
+        if (!Objects.equals(this.codigo, other.codigo)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Endereco{" + "codigo=" + codigo + ", rua=" + rua + ", bairro=" + bairro + ", cidade=" + cidade + ", numero=" + numero + ", cep=" + cep + ", complemento=" + complemento + '}';
+    }
+    
 }
