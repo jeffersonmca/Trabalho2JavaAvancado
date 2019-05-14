@@ -16,7 +16,7 @@ import javax.persistence.Transient;
 @Entity
 public class Medico {
 
-    public Medico(Integer codigo, String nome, Paciente fkPessoa) {
+    public Medico(Integer codigo, String nome, Pessoa fkPessoa) {
         this.codigo = codigo;
         this.nome = nome;
         this.fkPessoa = fkPessoa;
@@ -41,7 +41,7 @@ public class Medico {
     private String nome;
     
     @JoinColumn(name = "med_pess_codigo", nullable = false)
-    private Paciente fkPessoa;
+    private Pessoa fkPessoa;
 
     public Integer getCodigo() {
         return codigo;
@@ -59,11 +59,11 @@ public class Medico {
         this.nome = nome;
     }
 
-    public Paciente getFkPessoa() {
+    public Pessoa getFkPessoa() {
         return fkPessoa;
     }
 
-    public void setFkPessoa(Paciente fkPessoa) {
+    public void setFkPessoa(Pessoa fkPessoa) {
         this.fkPessoa = fkPessoa;
     }
 
