@@ -14,7 +14,7 @@ import modelo.Endereco;
 import modelo.Secretario;
 import modelo.Usuario;
 
-class Validacao {
+public class Validacao {
 
     public Validacao() { 
         
@@ -140,32 +140,54 @@ class Validacao {
         return false;
     }
     
+    public static boolean ConsultaEdita(Consulta instancia) {
+        if(Alocado(instancia)){
+            if(Identificador(instancia.getCodigo())){
+                return Consulta(instancia);
+            }      
+        }
+        return false;
+    }    
     public static boolean Consulta(Consulta instancia) {
-        //Data é valida?
-        if(Data(instancia.getData())){
-           //Possui Chave Estrangeira Medico
-           if(Medico(instancia.getFkMedico())){
-                //Possui Chave Estrangeira 
-                if(Paciente(instancia.getFkPaciente())){
-                    return true;
-                }
-            }        
+        //Alocado?
+        if(Alocado(instancia)){
+            //Data é valida?
+            if(Data(instancia.getData())){
+               //Possui Chave Estrangeira Medico
+               if(Medico(instancia.getFkMedico())){
+                    //Possui Chave Estrangeira 
+                    if(Paciente(instancia.getFkPaciente())){
+                        return true;
+                    }
+                }        
+            }
+        }
+        return false;
+        
+    }
+    public static boolean EnderecoEdita(Endereco instancia) {
+        if(Alocado(instancia)){
+            if(Identificador(instancia.getCodigo())){
+                return Endereco(instancia);
+            }      
         }
         return false;
     }
-    
     public static boolean Endereco(Endereco instancia) {
-        //Rua é valida?
-        if(Vazio(instancia.getRua())){
-            //Bairroé valida?
-            if(Vazio(instancia.getBairro())){
-                //cidade é valida?
-                if(Vazio(instancia.getCidade())){
-                    //Numero é valida?
-                    if(NaturalNaoNulo(instancia.getNumero())){
-                        //Cep é valida?
-                        if(Vazio(instancia.getRua())){
-                            return true;
+        //Alocado?
+        if(Alocado(instancia)){
+            //Rua é valida?
+            if(Vazio(instancia.getRua())){
+                //Bairroé valida?
+                if(Vazio(instancia.getBairro())){
+                    //cidade é valida?
+                    if(Vazio(instancia.getCidade())){
+                        //Numero é valida?
+                        if(NaturalNaoNulo(instancia.getNumero())){
+                            //Cep é valida?
+                            if(Vazio(instancia.getRua())){
+                                return true;
+                            }
                         }
                     }
                 }
@@ -173,34 +195,65 @@ class Validacao {
         }
         return false;
     }
-
     
+    public static boolean MedicoEdita(Medico instancia) {
+        if(Alocado(instancia)){
+            if(Identificador(instancia.getCodigo())){
+                return Medico(instancia);
+            }      
+        }
+        return false;
+    } 
     public static boolean Medico(Medico instancia) {
-        //Pessoa é valida?
-        if(Pessoa(instancia.getFkPessoa())){
-            return true;
+        //Alocado?
+        if(Alocado(instancia)){
+            //Pessoa é valida?
+            if(Pessoa(instancia.getFkPessoa())){
+                return true;
+            }
+        }
+        return false;
+    }
+    public static boolean PacienteEdita(Paciente instancia) {
+        if(Alocado(instancia)){
+            if(Identificador(instancia.getCodigo())){
+                return Paciente(instancia);
+            }      
         }
         return false;
     }
     public static boolean Paciente(Paciente instancia) {
-        //Rua é valida?
-        if(Pessoa(instancia.getFkPessoa())){
-          return true;
+        //Alocado?
+        if(Alocado(instancia)){
+            //Rua é valida?
+            if(Pessoa(instancia.getFkPessoa())){
+                return true;
+            }
+        }
+        return false;
+    }
+    public static boolean PessoaEdita(Pessoa instancia) {
+        if(Alocado(instancia)){
+            if(Identificador(instancia.getCodigo())){
+                return Pessoa(instancia);
+            }      
         }
         return false;
     }
     public static boolean Pessoa(Pessoa instancia) {
-        //Nome
-        if(Vazio(instancia.getNome())){
-            //Cpf
-            if(Vazio(instancia.getCpf())){
-                //Idade
-                if(NaturalNaoNulo(instancia.getIdade())){
-                    //Sexo
-                    if(Vazio(instancia.getSexo())){
-                        //Endereco
-                        if(Endereco(instancia.getFkEndereco())){
-                            return true;
+        //Alocado?
+        if(Alocado(instancia)){        //Nome
+            if(Vazio(instancia.getNome())){
+                //Cpf
+                if(Vazio(instancia.getCpf())){
+                    //Idade
+                    if(NaturalNaoNulo(instancia.getIdade())){
+                        //Sexo
+                        if(Vazio(instancia.getSexo())){
+                            //Endereco
+                            if(Endereco(instancia.getFkEndereco())){
+                                return true;
+                            }
                         }
                     }
                 }
@@ -208,26 +261,43 @@ class Validacao {
         }
         return false;
     }
-    
-    public static boolean Secretario(Secretario instancia) {
-        if(Pessoa(instancia.getFkPessoa())){
-            return true;
+    public static boolean SecretarioEdita(Secretario instancia) {
+        if(Alocado(instancia)){
+            if(Identificador(instancia.getCodigo())){
+                return Secretario(instancia);
+            }      
         }
         return false;
     }
-    
+    public static boolean Secretario(Secretario instancia) {
+        //Alocado?
+        if(Alocado(instancia)){
+            if(Pessoa(instancia.getFkPessoa())){
+                return true;
+            }
+        }
+        return false;
+    }
+    public static boolean UsuarioEdita(Usuario instancia) {
+        if(Alocado(instancia)){
+            if(Identificador(instancia.getCodigo())){
+                return Usuario(instancia);
+            }      
+        }
+        return false;
+    }
     public static boolean Usuario(Usuario instancia) {
-        if(Vazio(instancia.getAutenticador())){
-            if(Vazio(instancia.getSenha())){
-                if(Pessoa(instancia.getFkPessoa())){
-                    return true;
+        //Alocado?
+        if(Alocado(instancia)){
+            if(Vazio(instancia.getAutenticador())){
+                if(Vazio(instancia.getSenha())){
+                    if(Pessoa(instancia.getFkPessoa())){
+                        return true;
+                    }
                 }
             }
         }
-        
         return false;
-    }
-    
-    
-    
+    }    
 }
+
