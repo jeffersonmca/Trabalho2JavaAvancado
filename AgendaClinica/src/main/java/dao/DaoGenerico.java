@@ -1,10 +1,10 @@
 package dao;
 
-
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import javax.persistence.EntityManager;
+import excecao.ExcecaoDao;
 import util.Conexao;
 
 public abstract class DaoGenerico<I, ID extends Serializable> implements InterfaceDaoGenerico<I, ID> {
@@ -22,7 +22,7 @@ public abstract class DaoGenerico<I, ID extends Serializable> implements Interfa
     }
     
     @Override
-    public void salvar(I instancia) {
+    public void salvar(I instancia) throws ExcecaoDao {
         
         try {
 
@@ -31,12 +31,12 @@ public abstract class DaoGenerico<I, ID extends Serializable> implements Interfa
             em.getTransaction().commit();
 
         } catch (Exception e) {
-            
+            throw new ExcecaoDao("Houve erro ao salvar o registro!");
         }
     }
 
     @Override
-    public I remover(ID codigo) {
+    public I remover(ID codigo) throws ExcecaoDao {
         
         try {
             I aux = buscarPorCodigo(codigo);
@@ -48,28 +48,28 @@ public abstract class DaoGenerico<I, ID extends Serializable> implements Interfa
             return aux;
             
         } catch (Exception e) {
+            throw new ExcecaoDao("Houve erro ao remover o registro!");
         }
-        return null;
     }
 
     @Override
-    public I buscarPorCodigo(ID codigo) {
+    public I buscarPorCodigo(ID codigo) throws ExcecaoDao {
 
         try {
             return em.find(entidade, codigo);
         } catch (Exception e) {
+            throw new ExcecaoDao("Houve erro ao pegar um registro!");
         }
-        return null;
     }
 
     @Override
-    public List<I> buscarTodos() {
+    public List<I> buscarTodos() throws ExcecaoDao {
         
         try {
             String sql = "select i from " + entidade.getName() + " i ";
             return em.createQuery(sql).getResultList();
         } catch (Exception e) {
+            throw new ExcecaoDao("Houve erro ao pegar todos os registros!");
         }
-        return null;
     }   
 }
