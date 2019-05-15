@@ -1,5 +1,6 @@
 package modelo;
 
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -43,6 +46,12 @@ public class Especializacao {
     
     @Column(name = "esp_bairro", length = TAMANHO_AREA)
     private String area;
+
+    @ManyToMany
+    @JoinTable(name = "medico_especializacao",
+                    joinColumns = @JoinColumn(name = "esp_codigo"),
+                    inverseJoinColumns = @JoinColumn(name = "med_codigo"))
+    private List<Medico> medicos;
 
     public Integer getCodigo() {
         return codigo;

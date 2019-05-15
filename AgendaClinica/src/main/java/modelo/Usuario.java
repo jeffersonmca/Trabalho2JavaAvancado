@@ -1,5 +1,6 @@
 package modelo;
 
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -19,7 +22,7 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(Integer codigo, String autenticador, String senha, Paciente fkPessoa) {
+    public Usuario(Integer codigo, String autenticador, String senha, Pessoa fkPessoa) {
         this.codigo = codigo;
         this.autenticador = autenticador;
         this.senha = senha;
@@ -46,7 +49,21 @@ public class Usuario {
     private String senha;
     
     @JoinColumn(name = "usu_pess_codigo", nullable = false)
-    private Paciente fkPessoa;
+    private Pessoa fkPessoa;
+    
+    @ManyToMany
+    @JoinTable(name = "usuario_permissao",
+                    joinColumns = @JoinColumn(name = "usu_codigo"),
+                    inverseJoinColumns = @JoinColumn(name = "per_codigo"))
+    private List<Permissao> permissoes;
+
+    public List<Permissao> getPermissoes() {
+        return permissoes;
+    }
+
+    public void setPermissoes(List<Permissao> permissoes) {
+        this.permissoes = permissoes;
+    }
 
     public Integer getCodigo() {
         return codigo;
@@ -72,11 +89,11 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public Paciente getFkPessoa() {
+    public Pessoa getFkPessoa() {
         return fkPessoa;
     }
 
-    public void setFkPessoa(Paciente fkPessoa) {
+    public void setFkPessoa(Pessoa fkPessoa) {
         this.fkPessoa = fkPessoa;
     }
 

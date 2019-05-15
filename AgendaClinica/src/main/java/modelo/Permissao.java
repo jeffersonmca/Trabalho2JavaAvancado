@@ -1,5 +1,6 @@
 package modelo;
 
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -16,11 +19,13 @@ import javax.persistence.Transient;
 @Entity
 public class Permissao {
 
-    public Permissao(Integer codigo, String descricao) {
+    public Permissao(Integer codigo, String descricao, List<Usuario> usuarios) {
         this.codigo = codigo;
         this.descricao = descricao;
+        this.usuarios = usuarios;
     }
 
+    
     public Permissao() {
     }
     
@@ -35,6 +40,20 @@ public class Permissao {
 
     @Column(name = "per_convenio", length = TAMANHO_DESCRICAO)
     private String descricao;
+    
+    @ManyToMany
+    @JoinTable(name = "usuario_permissao",
+                    joinColumns = @JoinColumn(name = "per_codigo"),
+                    inverseJoinColumns = @JoinColumn(name = "usu_codigo"))
+    private List<Usuario> usuarios;
+
+    public List<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(List<Usuario> usuarios) {
+        this.usuarios = usuarios;
+    }
 
     public Integer getCodigo() {
         return codigo;
