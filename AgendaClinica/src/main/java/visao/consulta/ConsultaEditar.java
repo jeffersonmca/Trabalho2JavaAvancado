@@ -1,5 +1,6 @@
-package jeffersonmca.com.github.gerenciadorambiente.visao.ambiente;
+package visao.consulta;
 
+import visao.contato.*;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -21,19 +22,13 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.WindowConstants;
-import jeffersonmca.com.github.gerenciadorambiente.excecoes.ExcecaoDAO;
-import jeffersonmca.com.github.gerenciadorambiente.excecoes.ExcecaoServico;
-import jeffersonmca.com.github.gerenciadorambiente.excecoes.ExcecaoValidacao;
-import jeffersonmca.com.github.gerenciadorambiente.modelo.Ambiente;
-import jeffersonmca.com.github.gerenciadorambiente.modelo.EnumTipoAmbiente;
-import jeffersonmca.com.github.gerenciadorambiente.servico.ServicoAmbiente;
 
-public class AmbienteEdita extends javax.swing.JDialog {
+public class ConsultaEditar extends javax.swing.JDialog {
 
     private ServicoAmbiente servico;
     private Integer codigo;
     
-    public AmbienteEdita(java.awt.Frame parent, boolean modal, ServicoAmbiente servico, Ambiente ambiente) {
+    public ConsultaEditar(java.awt.Frame parent, boolean modal, ServicoAmbiente servico, Ambiente ambiente) {
         super(parent, modal);
         initComponents();
         
@@ -75,18 +70,24 @@ public class AmbienteEdita extends javax.swing.JDialog {
         jLabel8 = new JLabel();
         ComboBoxTipoAmbiente1 = new JComboBox<>();
         spinnerCapacidade1 = new JSpinner();
-        panelBotoes = new JPanel();
-        buttonSalvar = new JButton();
+        jPanel3 = new JPanel();
+        buttonSalvar1 = new JButton();
         buttonCancelar = new JButton();
         jPanel1 = new JPanel();
         jLabel1 = new JLabel();
         jLabel2 = new JLabel();
-        jLabel3 = new JLabel();
-        textNome = new JTextField();
-        textLocalizacao = new JTextField();
+        textProntuario = new JTextField();
+        textHorarioInicio = new JTextField();
         jLabel4 = new JLabel();
-        ComboBoxTipoAmbiente = new JComboBox<>();
-        spinnerCapacidade = new JSpinner();
+        ComboBoxMedico = new JComboBox<>();
+        jLabel3 = new JLabel();
+        ComboBoxPaciente = new JComboBox<>();
+        textHorarioFim = new JTextField();
+        jLabel9 = new JLabel();
+        jLabel10 = new JLabel();
+        textData = new JTextField();
+        jLabel11 = new JLabel();
+        textData1 = new JTextField();
 
         jPanel2.setBorder(BorderFactory.createEtchedBorder());
 
@@ -142,54 +143,66 @@ public class AmbienteEdita extends javax.swing.JDialog {
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Editar registro");
 
-        panelBotoes.setBorder(BorderFactory.createEtchedBorder());
+        jPanel3.setBorder(BorderFactory.createEtchedBorder());
 
-        buttonSalvar.setFont(new Font("Noto Sans", 0, 18)); // NOI18N
-        buttonSalvar.setText("Salvar");
-        buttonSalvar.addMouseListener(new MouseAdapter() {
-            public void mouseEntered(MouseEvent evt) {
-                buttonSalvarMouseEntered(evt);
-            }
-            public void mouseExited(MouseEvent evt) {
-                buttonSalvarMouseExited(evt);
-            }
-        });
-        buttonSalvar.addActionListener(new ActionListener() {
+        buttonSalvar1.setText("Salvar");
+        buttonSalvar1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                buttonSalvarActionPerformed(evt);
+                buttonSalvar1ActionPerformed(evt);
             }
         });
-        panelBotoes.add(buttonSalvar);
+        jPanel3.add(buttonSalvar1);
 
-        buttonCancelar.setFont(new Font("Noto Sans", 0, 18)); // NOI18N
         buttonCancelar.setText("Cancelar");
-        buttonCancelar.addMouseListener(new MouseAdapter() {
-            public void mouseEntered(MouseEvent evt) {
-                buttonCancelarMouseEntered(evt);
-            }
-            public void mouseExited(MouseEvent evt) {
-                buttonCancelarMouseExited(evt);
-            }
-        });
         buttonCancelar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 buttonCancelarActionPerformed(evt);
             }
         });
-        panelBotoes.add(buttonCancelar);
+        jPanel3.add(buttonCancelar);
 
         jPanel1.setBorder(BorderFactory.createEtchedBorder());
 
-        jLabel1.setForeground(new Color(255, 0, 0));
-        jLabel1.setText("Nome:");
+        jLabel1.setText("Prontuario");
 
-        jLabel2.setText("TipoAmbiente:");
+        jLabel2.setForeground(new Color(255, 0, 0));
+        jLabel2.setText("Medico");
 
-        jLabel3.setText("Capacidade:");
+        textHorarioInicio.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                textHorarioInicioActionPerformed(evt);
+            }
+        });
 
-        jLabel4.setText("Localização:");
+        jLabel4.setText("Horario Inicio");
 
-        spinnerCapacidade.setModel(new SpinnerNumberModel(0, 0, null, 1));
+        jLabel3.setForeground(new Color(255, 0, 0));
+        jLabel3.setText("Paciente");
+
+        textHorarioFim.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                textHorarioFimActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setText("Horario Fim");
+
+        jLabel10.setForeground(new Color(255, 0, 0));
+        jLabel10.setText("Data");
+
+        textData.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                textDataActionPerformed(evt);
+            }
+        });
+
+        jLabel11.setText("Valor");
+
+        textData1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                textData1ActionPerformed(evt);
+            }
+        });
 
         GroupLayout jPanel1Layout = new GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -198,109 +211,150 @@ public class AmbienteEdita extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(jLabel2)
+                    .addComponent(jLabel4)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel4))
-                .addGap(18, 18, 18)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel2))
+                .addGap(19, 19, 19)
                 .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                        .addComponent(textLocalizacao, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(textNome, GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
-                        .addComponent(ComboBoxTipoAmbiente, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(spinnerCapacidade, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                            .addComponent(textHorarioFim)
+                            .addComponent(textHorarioInicio)
+                            .addComponent(textData)
+                            .addComponent(textData1)
+                            .addComponent(textProntuario)
+                            .addComponent(ComboBoxMedico, 0, 212, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(ComboBoxPaciente, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(textNome, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(23, 23, 23)
+                    .addComponent(jLabel1)
+                    .addComponent(textProntuario, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(ComboBoxMedico, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2)))
+                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(jLabel3))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ComboBoxPaciente, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(ComboBoxTipoAmbiente, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
-                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(spinnerCapacidade, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(textLocalizacao, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textHorarioInicio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(textHorarioFim, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel10)
+                    .addComponent(textData, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel11)
+                    .addComponent(textData1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addComponent(panelBotoes, GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
-            .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel3, GroupLayout.DEFAULT_SIZE, 456, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(109, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(panelBotoes, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 8, Short.MAX_VALUE))
+                .addContainerGap(299, Short.MAX_VALUE)
+                .addComponent(jPanel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(57, Short.MAX_VALUE)))
         );
 
-        setSize(new Dimension(418, 289));
+        setSize(new Dimension(466, 374));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void buttonSalvarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonSalvarMouseEntered
-        this.setCursor(new Cursor(Cursor.HAND_CURSOR));
-    }//GEN-LAST:event_buttonSalvarMouseEntered
+    private void buttonSalvar1ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_buttonSalvar1ActionPerformed
 
-    private void buttonSalvarMouseExited(MouseEvent evt) {//GEN-FIRST:event_buttonSalvarMouseExited
-        this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-    }//GEN-LAST:event_buttonSalvarMouseExited
+        if (Validacao.Vazio(textNome.getText())) {
 
-    private void buttonSalvarActionPerformed(ActionEvent evt) {//GEN-FIRST:event_buttonSalvarActionPerformed
-        
+            JOptionPane.showMessageDialog(this,
+                "Informe o nome do ambiente",
+                "Inclusão",
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         Ambiente a = new Ambiente(codigo,
                                   textNome.getText(),
                                   (EnumTipoAmbiente) ComboBoxTipoAmbiente.getSelectedItem(),
                                   (Integer)spinnerCapacidade.getValue(),
                                   textLocalizacao.getText()
-        );        
+        );
         
         try {
-            servico.editar(a);
+            servico.salvar(a);
         } catch (ExcecaoDAO|ExcecaoValidacao|ExcecaoServico e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         setVisible(false);
         dispose();
-    }//GEN-LAST:event_buttonSalvarActionPerformed
-
-    private void buttonCancelarMouseEntered(MouseEvent evt) {//GEN-FIRST:event_buttonCancelarMouseEntered
-        this.setCursor(new Cursor(Cursor.HAND_CURSOR));
-    }//GEN-LAST:event_buttonCancelarMouseEntered
-
-    private void buttonCancelarMouseExited(MouseEvent evt) {//GEN-FIRST:event_buttonCancelarMouseExited
-        this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-    }//GEN-LAST:event_buttonCancelarMouseExited
+    }//GEN-LAST:event_buttonSalvar1ActionPerformed
 
     private void buttonCancelarActionPerformed(ActionEvent evt) {//GEN-FIRST:event_buttonCancelarActionPerformed
-        this.setVisible(false);
+        setVisible(false);
         this.dispose();
     }//GEN-LAST:event_buttonCancelarActionPerformed
 
+    private void textHorarioInicioActionPerformed(ActionEvent evt) {//GEN-FIRST:event_textHorarioInicioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textHorarioInicioActionPerformed
+
+    private void textHorarioFimActionPerformed(ActionEvent evt) {//GEN-FIRST:event_textHorarioFimActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textHorarioFimActionPerformed
+
+    private void textDataActionPerformed(ActionEvent evt) {//GEN-FIRST:event_textDataActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textDataActionPerformed
+
+    private void textData1ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_textData1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textData1ActionPerformed
+
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private JComboBox<String> ComboBoxTipoAmbiente;
+    private JComboBox<String> ComboBoxMedico;
+    private JComboBox<String> ComboBoxPaciente;
     private JComboBox<String> ComboBoxTipoAmbiente1;
     private JButton buttonCancelar;
-    private JButton buttonSalvar;
+    private JButton buttonSalvar1;
     private JLabel jLabel1;
+    private JLabel jLabel10;
+    private JLabel jLabel11;
     private JLabel jLabel2;
     private JLabel jLabel3;
     private JLabel jLabel4;
@@ -308,14 +362,17 @@ public class AmbienteEdita extends javax.swing.JDialog {
     private JLabel jLabel6;
     private JLabel jLabel7;
     private JLabel jLabel8;
+    private JLabel jLabel9;
     private JPanel jPanel1;
     private JPanel jPanel2;
-    private JPanel panelBotoes;
-    private JSpinner spinnerCapacidade;
+    private JPanel jPanel3;
     private JSpinner spinnerCapacidade1;
-    private JTextField textLocalizacao;
+    private JTextField textData;
+    private JTextField textData1;
+    private JTextField textHorarioFim;
+    private JTextField textHorarioInicio;
     private JTextField textLocalizacao1;
-    private JTextField textNome;
     private JTextField textNome1;
+    private JTextField textProntuario;
     // End of variables declaration//GEN-END:variables
 }

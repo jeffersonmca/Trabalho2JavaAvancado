@@ -1,20 +1,16 @@
-package jeffersonmca.com.github.gerenciadorambiente.visao.ambiente;
+package visao.contato;
 
 import java.awt.Cursor;
-import jeffersonmca.com.github.gerenciadorambiente.modelo.Ambiente;
-import jeffersonmca.com.github.gerenciadorambiente.servico.ServicoAmbiente;
 import java.util.List;
 import javax.swing.JOptionPane;
-import jeffersonmca.com.github.gerenciadorambiente.excecoes.ExcecaoDAO;
-import jeffersonmca.com.github.gerenciadorambiente.excecoes.ExcecaoServico;
 
-public class AmbienteListagem extends javax.swing.JFrame {
+public class ContatoListagem extends javax.swing.JFrame {
 
     private ServicoAmbiente service;
     private List<Ambiente> dados;
     private AmbienteTableModel tabModel;
     
-    public AmbienteListagem() {
+    public ContatoListagem() {
         
         initComponents();
         service = new ServicoAmbiente();

@@ -1,16 +1,18 @@
-package jeffersonmca.com.github.gerenciadorambiente.visao.ambiente;
+package visao.permissao;
 
-import jeffersonmca.com.github.gerenciadorambiente.modelo.Ambiente;
+import visao.paciente.*;
+import visao.medico.*;
+import visao.especializacao.*;
+import visao.contato.*;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
-import jeffersonmca.com.github.gerenciadorambiente.modelo.EnumTipoAmbiente;
 
-public class AmbienteTableModel  extends AbstractTableModel {
+public class PacienteTableModel  extends AbstractTableModel {
 
     private List<Ambiente> dados;
     private String[] colunas = {"Código", "Nome", "Tipo Ambiente", "Capacidade", "Localização"};
 
-    public AmbienteTableModel(List<Ambiente> dados) {
+    public PacienteTableModel(List<Ambiente> dados) {
         this.dados = dados;
     }
     

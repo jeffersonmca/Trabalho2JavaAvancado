@@ -1,6 +1,5 @@
-package visao.especializacao;
+package visao.contato;
 
-import visao.contato.*;
 import visao.consulta.*;
 import visao.contato.*;
 import java.awt.Color;
@@ -25,12 +24,12 @@ import javax.swing.LayoutStyle;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.WindowConstants;
 
-public class EspecializacaoIncluir extends javax.swing.JDialog {
+public class ContatoEditar extends javax.swing.JDialog {
 
     private ServicoAmbiente servico;
     private Integer codigo;
     
-    public EspecializacaoIncluir(java.awt.Frame parent, boolean modal, ServicoAmbiente servico, Ambiente ambiente) {
+    public ContatoEditar(java.awt.Frame parent, boolean modal, ServicoAmbiente servico, Ambiente ambiente) {
         super(parent, modal);
         initComponents();
         
@@ -77,9 +76,11 @@ public class EspecializacaoIncluir extends javax.swing.JDialog {
         buttonCancelar = new JButton();
         jPanel1 = new JPanel();
         jLabel1 = new JLabel();
-        textNome = new JTextField();
-        textArea = new JTextField();
+        textEmail1 = new JTextField();
+        textTelefone = new JTextField();
         jLabel2 = new JLabel();
+        jLabel3 = new JLabel();
+        textCelular = new JTextField();
 
         jPanel2.setBorder(BorderFactory.createEtchedBorder());
 
@@ -155,9 +156,11 @@ public class EspecializacaoIncluir extends javax.swing.JDialog {
 
         jPanel1.setBorder(BorderFactory.createEtchedBorder());
 
-        jLabel1.setText("Nome");
+        jLabel1.setText("E-mail");
 
-        jLabel2.setText("Area");
+        jLabel2.setText("Telefone");
+
+        jLabel3.setText("Celular");
 
         GroupLayout jPanel1Layout = new GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -166,11 +169,13 @@ public class EspecializacaoIncluir extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel3))
                 .addGap(31, 31, 31)
                 .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                    .addComponent(textNome, GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
-                    .addComponent(textArea))
+                    .addComponent(textEmail1)
+                    .addComponent(textTelefone)
+                    .addComponent(textCelular, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(136, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -178,12 +183,16 @@ public class EspecializacaoIncluir extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(textNome, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textEmail1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(textArea, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(76, Short.MAX_VALUE))
+                    .addComponent(textTelefone, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(textCelular, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         GroupLayout layout = new GroupLayout(getContentPane());
@@ -194,7 +203,7 @@ public class EspecializacaoIncluir extends javax.swing.JDialog {
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(37, Short.MAX_VALUE)))
+                    .addContainerGap(22, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -252,6 +261,7 @@ public class EspecializacaoIncluir extends javax.swing.JDialog {
     private JButton buttonSalvar1;
     private JLabel jLabel1;
     private JLabel jLabel2;
+    private JLabel jLabel3;
     private JLabel jLabel5;
     private JLabel jLabel6;
     private JLabel jLabel7;
@@ -260,9 +270,10 @@ public class EspecializacaoIncluir extends javax.swing.JDialog {
     private JPanel jPanel2;
     private JPanel jPanel3;
     private JSpinner spinnerCapacidade1;
-    private JTextField textArea;
+    private JTextField textCelular;
+    private JTextField textEmail1;
     private JTextField textLocalizacao1;
-    private JTextField textNome;
     private JTextField textNome1;
+    private JTextField textTelefone;
     // End of variables declaration//GEN-END:variables
 }
