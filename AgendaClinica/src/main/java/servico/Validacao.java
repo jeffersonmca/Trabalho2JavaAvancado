@@ -11,6 +11,7 @@ import modelo.Medico;
 import modelo.Paciente;
 import modelo.Pessoa;
 import modelo.Endereco;
+import modelo.Permissao;
 import modelo.Secretario;
 import modelo.Usuario;
 
@@ -295,6 +296,23 @@ public class Validacao {
                         return true;
                     }
                 }
+            }
+        }
+        return false;
+    }    
+    public static boolean PermissaoEdita(Permissao instancia) {
+        if(Alocado(instancia)){
+            if(Identificador(instancia.getCodigo())){
+                return Permissao(instancia);
+            }      
+        }
+        return false;
+    }
+    public static boolean Permissao(Permissao instancia) {
+        //Alocado?
+        if(Alocado(instancia)){
+            if(Vazio(instancia.getDescricao())){
+                return true;
             }
         }
         return false;
