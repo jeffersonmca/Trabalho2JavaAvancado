@@ -1,18 +1,14 @@
 package visao.secretario;
 
-import visao.medico.*;
-import visao.especializacao.*;
-import visao.contato.*;
-import visao.consulta.*;
-import visao.contato.*;
+import excecao.ExcecaoDao;
+import excecao.ExcecaoServico;
+import excecao.ExcecaoValidacao;
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.util.List;
+import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
@@ -24,36 +20,48 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.WindowConstants;
+import modelo.Medico;
+import modelo.Pessoa;
+import modelo.Secretario;
+import servico.ServicoPessoa;
+import servico.ServicoSecretario;
 
 public class SecretarioEditar extends javax.swing.JDialog {
 
-    private ServicoAmbiente servico;
+    private ServicoSecretario servico;
     private Integer codigo;
+    private ServicoPessoa pesServico;
     
-    public SecretarioEditar(java.awt.Frame parent, boolean modal, ServicoAmbiente servico, Ambiente ambiente) {
+    public SecretarioEditar(java.awt.Frame parent, boolean modal, ServicoSecretario servico, Secretario secretario) {
         super(parent, modal);
         initComponents();
         
         this.servico = servico;
         
         PreencheComboBox();
-        PreencheCampos(ambiente);
+        PreencheCampos(secretario);
     }
     
     private void PreencheComboBox() {
+         //Pessoa
+        List<Pessoa> lista1 = null;
+        try {
+            lista1 = pesServico.buscarTodos();
+        } catch (ExcecaoDao ex) {}
         
-        DefaultComboBoxModel dcbmTipoAmbiente = new DefaultComboBoxModel(EnumTipoAmbiente.values());
-        ComboBoxTipoAmbiente.setModel(dcbmTipoAmbiente);
+        Vector<Pessoa> vetor1 = new Vector<>(lista1);
+        
+        DefaultComboBoxModel dcbmPessoa =
+               new DefaultComboBoxModel(vetor1);
+        ComboBoxPessoa.setModel(dcbmPessoa);
+       
     }
     
-    private void PreencheCampos(Ambiente ambiente) {
-        codigo = ambiente.getCodigo();
-        textPeriodo.setText(ambiente.getNome());
-        ComboBoxTipoAmbiente.setSelectedItem(ambiente.getTipoAmbiente());
-        spinnerCapacidade.setValue(ambiente.getCapacidade());
-        textLocalizacao.setText(ambiente.getLocalizacao());
+    private void PreencheCampos(Secretario secretario) {
+        codigo = secretario.getCodigo();
+        textPeriodo.setText(secretario.getPeriodoTrabalho());
+        ComboBoxPessoa.setSelectedItem(secretario.getFkPessoa());
     }
 
     /**
@@ -159,6 +167,12 @@ public class SecretarioEditar extends javax.swing.JDialog {
 
         jLabel1.setText("Periodo");
 
+        textPeriodo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                textPeriodoActionPerformed(evt);
+            }
+        });
+
         jLabel3.setForeground(new Color(255, 0, 0));
         jLabel3.setText("Pessoa");
 
@@ -213,25 +227,24 @@ public class SecretarioEditar extends javax.swing.JDialog {
 
     private void buttonSalvar1ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_buttonSalvar1ActionPerformed
 
-        if (Validacao.Vazio(textPeriodo.getText())) {
+         //Pessoa
+        if (ComboBoxPessoa.getSelectedIndex()<=-1) {
 
             JOptionPane.showMessageDialog(this,
-                "Informe o nome do ambiente",
-                "Inclusão",
+                "Informe a Pessoa",
+                "Edição",
                 JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        Ambiente a = new Ambiente(codigo,
-                                  textPeriodo.getText(),
-                                  (EnumTipoAmbiente) ComboBoxTipoAmbiente.getSelectedItem(),
-                                  (Integer)spinnerCapacidade.getValue(),
-                                  textLocalizacao.getText()
+        Secretario a = new Secretario(codigo,
+                                textPeriodo.getText(),
+                                (Pessoa)ComboBoxPessoa.getSelectedItem()
         );
         
         try {
             servico.salvar(a);
-        } catch (ExcecaoDAO|ExcecaoValidacao|ExcecaoServico e) {
+        } catch (ExcecaoDao|ExcecaoValidacao|ExcecaoServico e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -244,6 +257,10 @@ public class SecretarioEditar extends javax.swing.JDialog {
         setVisible(false);
         this.dispose();
     }//GEN-LAST:event_buttonCancelarActionPerformed
+
+    private void textPeriodoActionPerformed(ActionEvent evt) {//GEN-FIRST:event_textPeriodoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textPeriodoActionPerformed
 
    
     // Variables declaration - do not modify//GEN-BEGIN:variables

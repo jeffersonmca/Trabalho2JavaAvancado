@@ -1,4 +1,4 @@
-package visao.permissao;
+package visao.pessoa;
 
 import visao.paciente.*;
 import visao.medico.*;
@@ -28,12 +28,12 @@ import javax.swing.LayoutStyle;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.WindowConstants;
 
-public class PacienteIncluir extends javax.swing.JDialog {
+public class PessoaIncluir extends javax.swing.JDialog {
 
     private ServicoAmbiente servico;
     private Integer codigo;
     
-    public PacienteIncluir(java.awt.Frame parent, boolean modal, ServicoAmbiente servico, Ambiente ambiente) {
+    public PessoaIncluir(java.awt.Frame parent, boolean modal, ServicoAmbiente servico, Ambiente ambiente) {
         super(parent, modal);
         initComponents();
         
@@ -51,7 +51,7 @@ public class PacienteIncluir extends javax.swing.JDialog {
     
     private void PreencheCampos(Ambiente ambiente) {
         codigo = ambiente.getCodigo();
-        textDescricao.setText(ambiente.getNome());
+        textNome.setText(ambiente.getNome());
         ComboBoxTipoAmbiente.setSelectedItem(ambiente.getTipoAmbiente());
         spinnerCapacidade.setValue(ambiente.getCapacidade());
         textLocalizacao.setText(ambiente.getLocalizacao());
@@ -80,7 +80,17 @@ public class PacienteIncluir extends javax.swing.JDialog {
         buttonCancelar = new JButton();
         jPanel1 = new JPanel();
         jLabel1 = new JLabel();
-        textDescricao = new JTextField();
+        textNome = new JTextField();
+        ComboBoxEndereco = new JComboBox<>();
+        jLabel3 = new JLabel();
+        jLabel2 = new JLabel();
+        textCpf = new JTextField();
+        textIdade = new JTextField();
+        jLabel4 = new JLabel();
+        jLabel9 = new JLabel();
+        textSexo = new JTextField();
+        jLabel10 = new JLabel();
+        ComboBoxContato = new JComboBox<>();
 
         jPanel2.setBorder(BorderFactory.createEtchedBorder());
 
@@ -156,31 +166,89 @@ public class PacienteIncluir extends javax.swing.JDialog {
 
         jPanel1.setBorder(BorderFactory.createEtchedBorder());
 
-        jLabel1.setText("Permissao");
+        jLabel1.setForeground(new Color(255, 0, 0));
+        jLabel1.setText("Nome");
+
+        jLabel3.setForeground(new Color(255, 0, 0));
+        jLabel3.setText("Endereco");
+
+        jLabel2.setForeground(new Color(255, 0, 0));
+        jLabel2.setText("CPF");
+
+        jLabel4.setForeground(new Color(255, 0, 0));
+        jLabel4.setText("Idade");
+
+        jLabel9.setForeground(new Color(255, 0, 0));
+        jLabel9.setText("Sexo");
+
+        jLabel10.setForeground(new Color(255, 0, 0));
+        jLabel10.setText("Contato");
 
         GroupLayout jPanel1Layout = new GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(24, 24, 24)
-                .addComponent(textDescricao, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(143, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(24, 24, 24)
+                        .addComponent(textNome))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel4))
+                                .addGap(26, 26, 26)
+                                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(textIdade, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
+                                    .addComponent(textCpf, GroupLayout.Alignment.LEADING)
+                                    .addComponent(textSexo, GroupLayout.Alignment.LEADING)))
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(58, 58, 58)
+                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                            .addComponent(ComboBoxEndereco, 0, 361, Short.MAX_VALUE)
+                            .addComponent(ComboBoxContato, 0, 361, Short.MAX_VALUE))))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(textDescricao, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(93, Short.MAX_VALUE))
+                    .addComponent(textNome, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(textCpf, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(textIdade, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(textSexo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(ComboBoxEndereco, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(ComboBoxContato, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addGap(51, 51, 51))
         );
 
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, GroupLayout.DEFAULT_SIZE, 456, Short.MAX_VALUE)
+            .addComponent(jPanel3, GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -188,19 +256,19 @@ public class PacienteIncluir extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(27, Short.MAX_VALUE)
-                .addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jPanel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
         );
 
-        setSize(new Dimension(466, 258));
+        setSize(new Dimension(481, 391));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonSalvar1ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_buttonSalvar1ActionPerformed
 
-        if (Validacao.Vazio(textDescricao.getText())) {
+        if (Validacao.Vazio(textNome.getText())) {
 
             JOptionPane.showMessageDialog(this,
                 "Informe o nome do ambiente",
@@ -210,7 +278,7 @@ public class PacienteIncluir extends javax.swing.JDialog {
         }
 
         Ambiente a = new Ambiente(codigo,
-                                  textDescricao.getText(),
+                                  textNome.getText(),
                                   (EnumTipoAmbiente) ComboBoxTipoAmbiente.getSelectedItem(),
                                   (Integer)spinnerCapacidade.getValue(),
                                   textLocalizacao.getText()
@@ -234,20 +302,30 @@ public class PacienteIncluir extends javax.swing.JDialog {
 
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private JComboBox<String> ComboBoxContato;
+    private JComboBox<String> ComboBoxEndereco;
     private JComboBox<String> ComboBoxTipoAmbiente1;
     private JButton buttonCancelar;
     private JButton buttonSalvar1;
     private JLabel jLabel1;
+    private JLabel jLabel10;
+    private JLabel jLabel2;
+    private JLabel jLabel3;
+    private JLabel jLabel4;
     private JLabel jLabel5;
     private JLabel jLabel6;
     private JLabel jLabel7;
     private JLabel jLabel8;
+    private JLabel jLabel9;
     private JPanel jPanel1;
     private JPanel jPanel2;
     private JPanel jPanel3;
     private JSpinner spinnerCapacidade1;
-    private JTextField textDescricao;
+    private JTextField textCpf;
+    private JTextField textIdade;
     private JTextField textLocalizacao1;
+    private JTextField textNome;
     private JTextField textNome1;
+    private JTextField textSexo;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,6 +1,10 @@
 package visao.consulta;
 
+import excecao.ExcecaoDao;
+import excecao.ExcecaoServico;
+import excecao.ExcecaoValidacao;
 import visao.contato.*;
+import modelo.Consulta;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -9,6 +13,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
@@ -22,34 +33,66 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.WindowConstants;
+import modelo.Medico;
+import modelo.Paciente;
+import servico.ServicoConsulta;
+import servico.ServicoMedico;
+import servico.ServicoPaciente;
+import servico.Validacao;
 
 public class ConsultaEditar extends javax.swing.JDialog {
 
-    private ServicoAmbiente servico;
+    private ServicoConsulta servico;
     private Integer codigo;
+    private ServicoMedico medServico;
+    private ServicoPaciente pacServico;
     
-    public ConsultaEditar(java.awt.Frame parent, boolean modal, ServicoAmbiente servico, Ambiente ambiente) {
+    public ConsultaEditar(java.awt.Frame parent, boolean modal, ServicoConsulta servico, Consulta consulta) {
         super(parent, modal);
         initComponents();
         
         this.servico = servico;
-        
+        this.medServico = new ServicoMedico();
+        this.pacServico = new ServicoPaciente();
         PreencheComboBox();
-        PreencheCampos(ambiente);
+        PreencheCampos(consulta);
     }
     
-    private void PreencheComboBox() {
+    private void PreencheComboBox() {       
+        //MEDICO
+        List<Medico> lista1 = null;
+        try {
+            lista1 = medServico.buscarTodos();
+        } catch (ExcecaoDao ex) {}
         
-        DefaultComboBoxModel dcbmTipoAmbiente = new DefaultComboBoxModel(EnumTipoAmbiente.values());
-        ComboBoxTipoAmbiente.setModel(dcbmTipoAmbiente);
+        Vector<Medico> vetor1 = new Vector<>(lista1);
+        
+        DefaultComboBoxModel dcbmMedico =
+               new DefaultComboBoxModel(vetor1);
+        ComboBoxMedico.setModel(dcbmMedico);
+     
+        //PACIENTE
+        List<Paciente> lista2 = null;
+        try {
+            lista2 = pacServico.buscarTodos();
+        } catch (ExcecaoDao ex) {}
+        
+        Vector<Paciente> vetor2 = new Vector<>(lista2);
+        
+        DefaultComboBoxModel dcbmPaciente =
+               new DefaultComboBoxModel(vetor2);
+        ComboBoxPaciente.setModel(dcbmPaciente);
     }
     
-    private void PreencheCampos(Ambiente ambiente) {
-        codigo = ambiente.getCodigo();
-        textNome.setText(ambiente.getNome());
-        ComboBoxTipoAmbiente.setSelectedItem(ambiente.getTipoAmbiente());
-        spinnerCapacidade.setValue(ambiente.getCapacidade());
-        textLocalizacao.setText(ambiente.getLocalizacao());
+    private void PreencheCampos(Consulta consulta) {
+        codigo = consulta.getCodigo();
+        textProntuario.setText(consulta.getProntuario());
+        ComboBoxMedico.setSelectedItem(consulta.getFkMedico());
+        ComboBoxPaciente.setSelectedItem(consulta.getFkPaciente());
+        textHorarioInicio.setText(consulta.getHorarioInicio().toString());
+        textHorarioFim.setText(consulta.getHorarioFim().toString());
+        textData.setText(consulta.getData().toString());
+        textValor.setText(consulta.getValor().toString());
     }
 
     /**
@@ -87,7 +130,7 @@ public class ConsultaEditar extends javax.swing.JDialog {
         jLabel10 = new JLabel();
         textData = new JTextField();
         jLabel11 = new JLabel();
-        textData1 = new JTextField();
+        textValor = new JTextField();
 
         jPanel2.setBorder(BorderFactory.createEtchedBorder());
 
@@ -168,6 +211,12 @@ public class ConsultaEditar extends javax.swing.JDialog {
         jLabel2.setForeground(new Color(255, 0, 0));
         jLabel2.setText("Medico");
 
+        textProntuario.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                textProntuarioActionPerformed(evt);
+            }
+        });
+
         textHorarioInicio.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 textHorarioInicioActionPerformed(evt);
@@ -175,6 +224,12 @@ public class ConsultaEditar extends javax.swing.JDialog {
         });
 
         jLabel4.setText("Horario Inicio");
+
+        ComboBoxMedico.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                ComboBoxMedicoActionPerformed(evt);
+            }
+        });
 
         jLabel3.setForeground(new Color(255, 0, 0));
         jLabel3.setText("Paciente");
@@ -198,9 +253,9 @@ public class ConsultaEditar extends javax.swing.JDialog {
 
         jLabel11.setText("Valor");
 
-        textData1.addActionListener(new ActionListener() {
+        textValor.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                textData1ActionPerformed(evt);
+                textValorActionPerformed(evt);
             }
         });
 
@@ -224,7 +279,7 @@ public class ConsultaEditar extends javax.swing.JDialog {
                             .addComponent(textHorarioFim)
                             .addComponent(textHorarioInicio)
                             .addComponent(textData)
-                            .addComponent(textData1)
+                            .addComponent(textValor)
                             .addComponent(textProntuario)
                             .addComponent(ComboBoxMedico, 0, 212, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -266,7 +321,7 @@ public class ConsultaEditar extends javax.swing.JDialog {
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel11)
-                    .addComponent(textData1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textValor, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -296,26 +351,47 @@ public class ConsultaEditar extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonSalvar1ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_buttonSalvar1ActionPerformed
-
-        if (Validacao.Vazio(textNome.getText())) {
+        //Medico
+        if (ComboBoxMedico.getSelectedIndex()<=-1) {
 
             JOptionPane.showMessageDialog(this,
-                "Informe o nome do ambiente",
-                "Inclusão",
+                "Informe o Medico",
+                "Edição",
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        //Paciente
+        if (ComboBoxPaciente.getSelectedIndex()<=-1) {
+
+            JOptionPane.showMessageDialog(this,
+                "Informe o Paciente",
+                "Edição",
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        //Data
+        if(Validacao.Vazio(textData.getText())){
+            JOptionPane.showMessageDialog(this,
+                "Informe a Data",
+                "Edição",
                 JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        Ambiente a = new Ambiente(codigo,
-                                  textNome.getText(),
-                                  (EnumTipoAmbiente) ComboBoxTipoAmbiente.getSelectedItem(),
-                                  (Integer)spinnerCapacidade.getValue(),
-                                  textLocalizacao.getText()
+                
+        Consulta a = new Consulta(codigo,
+                textProntuario.getText(),    
+                Validacao.ConverteStringParaHora(textHorarioInicio.getText()),
+                Validacao.ConverteStringParaHora(textHorarioFim.getText()),
+                Validacao.ConverteStringParaData(textData.getText()),
+                Float.parseFloat(textValor.getText()),
+                (Medico)ComboBoxMedico.getSelectedItem(),
+                (Paciente)ComboBoxMedico.getSelectedItem()
         );
-        
+                
         try {
-            servico.salvar(a);
-        } catch (ExcecaoDAO|ExcecaoValidacao|ExcecaoServico e) {
+            servico.editar(a);
+        } catch (ExcecaoDao|ExcecaoValidacao|ExcecaoServico e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -341,9 +417,17 @@ public class ConsultaEditar extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_textDataActionPerformed
 
-    private void textData1ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_textData1ActionPerformed
+    private void textValorActionPerformed(ActionEvent evt) {//GEN-FIRST:event_textValorActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textData1ActionPerformed
+    }//GEN-LAST:event_textValorActionPerformed
+
+    private void ComboBoxMedicoActionPerformed(ActionEvent evt) {//GEN-FIRST:event_ComboBoxMedicoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ComboBoxMedicoActionPerformed
+
+    private void textProntuarioActionPerformed(ActionEvent evt) {//GEN-FIRST:event_textProntuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textProntuarioActionPerformed
 
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -368,11 +452,11 @@ public class ConsultaEditar extends javax.swing.JDialog {
     private JPanel jPanel3;
     private JSpinner spinnerCapacidade1;
     private JTextField textData;
-    private JTextField textData1;
     private JTextField textHorarioFim;
     private JTextField textHorarioInicio;
     private JTextField textLocalizacao1;
     private JTextField textNome1;
     private JTextField textProntuario;
+    private JTextField textValor;
     // End of variables declaration//GEN-END:variables
 }

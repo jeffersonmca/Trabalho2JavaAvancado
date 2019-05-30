@@ -1,4 +1,4 @@
-package visao.permissao;
+package visao.pessoa;
 
 import visao.paciente.*;
 import visao.medico.*;
@@ -8,13 +8,13 @@ import java.awt.Cursor;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-public class PacienteListagem extends javax.swing.JFrame {
+public class PessoaListagem extends javax.swing.JFrame {
 
     private ServicoAmbiente service;
     private List<Ambiente> dados;
     private AmbienteTableModel tabModel;
     
-    public PacienteListagem() {
+    public PessoaListagem() {
         
         initComponents();
         service = new ServicoAmbiente();

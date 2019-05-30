@@ -47,6 +47,10 @@ public class Permissao {
                     inverseJoinColumns = @JoinColumn(name = "usu_codigo"))
     private List<Usuario> usuarios;
 
+    public Permissao(Integer codigo, String text) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public List<Usuario> getUsuarios() {
         return usuarios;
     }

@@ -1,17 +1,14 @@
 package visao.medico;
 
-import visao.especializacao.*;
-import visao.contato.*;
-import visao.consulta.*;
-import visao.contato.*;
+import excecao.ExcecaoDao;
+import excecao.ExcecaoServico;
+import excecao.ExcecaoValidacao;
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.util.List;
+import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
@@ -23,36 +20,46 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.WindowConstants;
+import modelo.Medico;
+import modelo.Pessoa;
+import servico.ServicoMedico;
+import servico.ServicoPessoa;
 
 public class MedicoEditar extends javax.swing.JDialog {
 
-    private ServicoAmbiente servico;
+    private ServicoMedico servico;
     private Integer codigo;
+    private ServicoPessoa pesServico;
     
-    public MedicoEditar(java.awt.Frame parent, boolean modal, ServicoAmbiente servico, Ambiente ambiente) {
+    public MedicoEditar(java.awt.Frame parent, boolean modal, ServicoMedico servico, Medico medico) {
         super(parent, modal);
         initComponents();
         
         this.servico = servico;
         
         PreencheComboBox();
-        PreencheCampos(ambiente);
+        PreencheCampos(medico);
     }
     
     private void PreencheComboBox() {
+         //PESSOA
+        List<Pessoa> lista1 = null;
+        try {
+            lista1 = pesServico.buscarTodos();
+        } catch (ExcecaoDao ex) {}
         
-        DefaultComboBoxModel dcbmTipoAmbiente = new DefaultComboBoxModel(EnumTipoAmbiente.values());
-        ComboBoxTipoAmbiente.setModel(dcbmTipoAmbiente);
+        Vector<Pessoa> vetor1 = new Vector<>(lista1);
+        
+        DefaultComboBoxModel dcbmPessoa =
+               new DefaultComboBoxModel(vetor1);
+        ComboBoxPessoa.setModel(dcbmPessoa);
     }
     
-    private void PreencheCampos(Ambiente ambiente) {
-        codigo = ambiente.getCodigo();
-        textPeriodo.setText(ambiente.getNome());
-        ComboBoxTipoAmbiente.setSelectedItem(ambiente.getTipoAmbiente());
-        spinnerCapacidade.setValue(ambiente.getCapacidade());
-        textLocalizacao.setText(ambiente.getLocalizacao());
+    private void PreencheCampos(Medico medico) {
+        codigo = medico.getCodigo();
+        textPeriodo.setText(medico.getPeriodoTrabalho());
+        ComboBoxPessoa.setSelectedItem(medico.getFkPessoa());
     }
 
     /**
@@ -158,6 +165,18 @@ public class MedicoEditar extends javax.swing.JDialog {
 
         jLabel1.setText("Periodo");
 
+        textPeriodo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                textPeriodoActionPerformed(evt);
+            }
+        });
+
+        ComboBoxPessoa.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                ComboBoxPessoaActionPerformed(evt);
+            }
+        });
+
         jLabel3.setForeground(new Color(255, 0, 0));
         jLabel3.setText("Pessoa");
 
@@ -211,26 +230,25 @@ public class MedicoEditar extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonSalvar1ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_buttonSalvar1ActionPerformed
-
-        if (Validacao.Vazio(textPeriodo.getText())) {
+        //Medico
+        if (ComboBoxPessoa.getSelectedIndex()<=-1) {
 
             JOptionPane.showMessageDialog(this,
-                "Informe o nome do ambiente",
-                "Inclusão",
+                "Informe a Pessoa",
+                "Edição",
                 JOptionPane.ERROR_MESSAGE);
             return;
         }
+        
 
-        Ambiente a = new Ambiente(codigo,
-                                  textPeriodo.getText(),
-                                  (EnumTipoAmbiente) ComboBoxTipoAmbiente.getSelectedItem(),
-                                  (Integer)spinnerCapacidade.getValue(),
-                                  textLocalizacao.getText()
+        Medico a = new Medico(codigo,
+                        textPeriodo.getText(),
+                        (Pessoa)ComboBoxPessoa.getSelectedItem()
         );
         
         try {
-            servico.salvar(a);
-        } catch (ExcecaoDAO|ExcecaoValidacao|ExcecaoServico e) {
+            servico.editar(a);
+        } catch (ExcecaoDao|ExcecaoValidacao|ExcecaoServico e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -243,6 +261,14 @@ public class MedicoEditar extends javax.swing.JDialog {
         setVisible(false);
         this.dispose();
     }//GEN-LAST:event_buttonCancelarActionPerformed
+
+    private void ComboBoxPessoaActionPerformed(ActionEvent evt) {//GEN-FIRST:event_ComboBoxPessoaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ComboBoxPessoaActionPerformed
+
+    private void textPeriodoActionPerformed(ActionEvent evt) {//GEN-FIRST:event_textPeriodoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textPeriodoActionPerformed
 
    
     // Variables declaration - do not modify//GEN-BEGIN:variables

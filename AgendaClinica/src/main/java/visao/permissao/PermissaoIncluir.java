@@ -28,12 +28,12 @@ import javax.swing.LayoutStyle;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.WindowConstants;
 
-public class PacienteEditar extends javax.swing.JDialog {
+public class PermissaoIncluir extends javax.swing.JDialog {
 
     private ServicoAmbiente servico;
     private Integer codigo;
     
-    public PacienteEditar(java.awt.Frame parent, boolean modal, ServicoAmbiente servico, Ambiente ambiente) {
+    public PermissaoIncluir(java.awt.Frame parent, boolean modal, ServicoAmbiente servico, Ambiente ambiente) {
         super(parent, modal);
         initComponents();
         

@@ -7,12 +7,12 @@ import visao.contato.*;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
-public class PacienteTableModel  extends AbstractTableModel {
+public class PessoaTableModel  extends AbstractTableModel {
 
     private List<Ambiente> dados;
     private String[] colunas = {"Código", "Nome", "Tipo Ambiente", "Capacidade", "Localização"};
 
-    public PacienteTableModel(List<Ambiente> dados) {
+    public PessoaTableModel(List<Ambiente> dados) {
         this.dados = dados;
     }
     

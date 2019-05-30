@@ -1,17 +1,12 @@
 package visao.contato;
 
-import visao.consulta.*;
-import visao.contato.*;
+import excecao.ExcecaoDao;
+import excecao.ExcecaoServico;
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.BorderFactory;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -21,36 +16,30 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.WindowConstants;
+import modelo.Contato;
+import servico.ServicoContato;
 
 public class ContatoEditar extends javax.swing.JDialog {
 
-    private ServicoAmbiente servico;
+    private ServicoContato servico;
     private Integer codigo;
     
-    public ContatoEditar(java.awt.Frame parent, boolean modal, ServicoAmbiente servico, Ambiente ambiente) {
+    public ContatoEditar(java.awt.Frame parent, boolean modal, ServicoContato servico, Contato contato) {
         super(parent, modal);
         initComponents();
         
         this.servico = servico;
         
-        PreencheComboBox();
-        PreencheCampos(ambiente);
+        PreencheCampos(contato);
     }
     
-    private void PreencheComboBox() {
-        
-        DefaultComboBoxModel dcbmTipoAmbiente = new DefaultComboBoxModel(EnumTipoAmbiente.values());
-        ComboBoxTipoAmbiente.setModel(dcbmTipoAmbiente);
-    }
-    
-    private void PreencheCampos(Ambiente ambiente) {
-        codigo = ambiente.getCodigo();
-        textNome.setText(ambiente.getNome());
-        ComboBoxTipoAmbiente.setSelectedItem(ambiente.getTipoAmbiente());
-        spinnerCapacidade.setValue(ambiente.getCapacidade());
-        textLocalizacao.setText(ambiente.getLocalizacao());
+       
+    private void PreencheCampos(Contato contato) {
+        codigo = contato.getCodigo();
+        textEmail1.setText(contato.getEmail());
+        textTelefone.setText(contato.getTelefone());
+        textCelular.setText(contato.getCelular());
     }
 
     /**
@@ -158,6 +147,12 @@ public class ContatoEditar extends javax.swing.JDialog {
 
         jLabel1.setText("E-mail");
 
+        textEmail1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                textEmail1ActionPerformed(evt);
+            }
+        });
+
         jLabel2.setText("Telefone");
 
         jLabel3.setText("Celular");
@@ -222,29 +217,20 @@ public class ContatoEditar extends javax.swing.JDialog {
 
     private void buttonSalvar1ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_buttonSalvar1ActionPerformed
 
-        if (Validacao.Vazio(textNome.getText())) {
-
-            JOptionPane.showMessageDialog(this,
-                "Informe o nome do ambiente",
-                "Inclusão",
-                JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        Ambiente a = new Ambiente(codigo,
-                                  textNome.getText(),
-                                  (EnumTipoAmbiente) ComboBoxTipoAmbiente.getSelectedItem(),
-                                  (Integer)spinnerCapacidade.getValue(),
-                                  textLocalizacao.getText()
+        
+        Contato a = new Contato(codigo,
+                                textEmail1.getText(),
+                                textTelefone.getText(),
+                                textCelular.getText()
         );
         
         try {
-            servico.salvar(a);
-        } catch (ExcecaoDAO|ExcecaoValidacao|ExcecaoServico e) {
+            servico.editar(a);
+        } catch (ExcecaoDao|ExcecaoServico e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
+        
         setVisible(false);
         dispose();
     }//GEN-LAST:event_buttonSalvar1ActionPerformed
@@ -253,6 +239,10 @@ public class ContatoEditar extends javax.swing.JDialog {
         setVisible(false);
         this.dispose();
     }//GEN-LAST:event_buttonCancelarActionPerformed
+
+    private void textEmail1ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_textEmail1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textEmail1ActionPerformed
 
    
     // Variables declaration - do not modify//GEN-BEGIN:variables

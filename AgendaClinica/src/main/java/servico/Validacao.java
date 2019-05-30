@@ -1,10 +1,14 @@
 package servico;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import modelo.Consulta;
 import modelo.Endereco;
 import modelo.Medico;
@@ -14,6 +18,7 @@ import modelo.Endereco;
 import modelo.Permissao;
 import modelo.Secretario;
 import modelo.Usuario;
+import visao.consulta.ConsultaEditar;
 
 public class Validacao {
 
@@ -317,5 +322,33 @@ public class Validacao {
         }
         return false;
     }    
+    public static Date ConverteStringParaData(String data){
+        if(!Vazio(data)){
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            Date novaData = null;
+            try {
+                novaData = sdf.parse(data);
+            } catch (ParseException ex) {
+                Logger.getLogger(ConsultaEditar.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return novaData;
+        }else{
+            return null;
+        }
+    }
+    public static Date ConverteStringParaHora(String data){
+        if(!Vazio(data)){
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+            Date novaData = null;
+            try {
+                novaData = sdf.parse(data);
+            } catch (ParseException ex) {
+                Logger.getLogger(ConsultaEditar.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return novaData;
+        }else{
+            return null;
+        }
+    }
 }
 

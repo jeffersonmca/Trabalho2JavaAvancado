@@ -1,18 +1,12 @@
 package visao.especializacao;
 
-import visao.contato.*;
-import visao.consulta.*;
-import visao.contato.*;
+import excecao.ExcecaoDao;
+import excecao.ExcecaoServico;
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.BorderFactory;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -22,36 +16,28 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.WindowConstants;
+import modelo.Especializacao;
+import servico.ServicoEspecializacao;
 
 public class EspecializacaoEditar extends javax.swing.JDialog {
 
-    private ServicoAmbiente servico;
+    private ServicoEspecializacao servico;
     private Integer codigo;
     
-    public EspecializacaoEditar(java.awt.Frame parent, boolean modal, ServicoAmbiente servico, Ambiente ambiente) {
+    public EspecializacaoEditar(java.awt.Frame parent, boolean modal, ServicoEspecializacao servico, Especializacao especializacao) {
         super(parent, modal);
         initComponents();
         
         this.servico = servico;
         
-        PreencheComboBox();
-        PreencheCampos(ambiente);
+        PreencheCampos(especializacao);
     }
     
-    private void PreencheComboBox() {
-        
-        DefaultComboBoxModel dcbmTipoAmbiente = new DefaultComboBoxModel(EnumTipoAmbiente.values());
-        ComboBoxTipoAmbiente.setModel(dcbmTipoAmbiente);
-    }
-    
-    private void PreencheCampos(Ambiente ambiente) {
-        codigo = ambiente.getCodigo();
-        textNome.setText(ambiente.getNome());
-        ComboBoxTipoAmbiente.setSelectedItem(ambiente.getTipoAmbiente());
-        spinnerCapacidade.setValue(ambiente.getCapacidade());
-        textLocalizacao.setText(ambiente.getLocalizacao());
+    private void PreencheCampos(Especializacao especializacao) {
+        codigo = especializacao.getCodigo();
+        textNome.setText(especializacao.getNome());
+        textArea.setText(especializacao.getArea());
     }
 
     /**
@@ -213,25 +199,15 @@ public class EspecializacaoEditar extends javax.swing.JDialog {
 
     private void buttonSalvar1ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_buttonSalvar1ActionPerformed
 
-        if (Validacao.Vazio(textNome.getText())) {
-
-            JOptionPane.showMessageDialog(this,
-                "Informe o nome do ambiente",
-                "Inclusão",
-                JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        Ambiente a = new Ambiente(codigo,
+       
+        Especializacao a = new Especializacao(codigo,
                                   textNome.getText(),
-                                  (EnumTipoAmbiente) ComboBoxTipoAmbiente.getSelectedItem(),
-                                  (Integer)spinnerCapacidade.getValue(),
-                                  textLocalizacao.getText()
+                                  textArea.getText()
         );
         
         try {
-            servico.salvar(a);
-        } catch (ExcecaoDAO|ExcecaoValidacao|ExcecaoServico e) {
+            servico.editar(a);
+        } catch (ExcecaoDao|ExcecaoServico e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }

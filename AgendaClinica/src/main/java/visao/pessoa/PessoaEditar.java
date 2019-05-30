@@ -1,19 +1,14 @@
 package visao.pessoa;
 
-import visao.paciente.*;
-import visao.medico.*;
-import visao.especializacao.*;
-import visao.contato.*;
-import visao.consulta.*;
-import visao.contato.*;
+import excecao.ExcecaoDao;
+import excecao.ExcecaoServico;
+import excecao.ExcecaoValidacao;
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.util.List;
+import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
@@ -25,36 +20,67 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.WindowConstants;
+import modelo.Contato;
+import modelo.Endereco;
+import modelo.Pessoa;
+import servico.ServicoContato;
+import servico.ServicoEndereco;
+import servico.ServicoPessoa;
+import servico.Validacao;
 
-public class PacienteIncluir extends javax.swing.JDialog {
+public class PessoaEditar extends javax.swing.JDialog {
 
-    private ServicoAmbiente servico;
+    private ServicoPessoa servico;
     private Integer codigo;
+    private ServicoEndereco endServico;
+    private ServicoContato conServico;
     
-    public PacienteIncluir(java.awt.Frame parent, boolean modal, ServicoAmbiente servico, Ambiente ambiente) {
+    public PessoaEditar(java.awt.Frame parent, boolean modal, ServicoPessoa servico, Pessoa pessoa) {
         super(parent, modal);
         initComponents();
         
         this.servico = servico;
         
         PreencheComboBox();
-        PreencheCampos(ambiente);
+        PreencheCampos(pessoa);
     }
     
     private void PreencheComboBox() {
+        //Endereco
+        List<Endereco> lista1 = null;
+        try {
+            lista1 = endServico.buscarTodos();
+        } catch (ExcecaoDao ex) {}
         
-        DefaultComboBoxModel dcbmTipoAmbiente = new DefaultComboBoxModel(EnumTipoAmbiente.values());
-        ComboBoxTipoAmbiente.setModel(dcbmTipoAmbiente);
+        Vector<Endereco> vetor1 = new Vector<>(lista1);
+        
+        DefaultComboBoxModel dcbmEndereco =
+               new DefaultComboBoxModel(vetor1);
+        ComboBoxEndereco.setModel(dcbmEndereco);
+        
+        
+        //Contato
+        List<Contato> lista2 = null;
+        try {
+            lista2 = conServico.buscarTodos();
+        } catch (ExcecaoDao ex) {}
+        
+        Vector<Contato> vetor2 = new Vector<>(lista2);
+        
+        DefaultComboBoxModel dcbmContato =
+               new DefaultComboBoxModel(vetor2);
+        ComboBoxEndereco.setModel(dcbmContato);
     }
     
-    private void PreencheCampos(Ambiente ambiente) {
-        codigo = ambiente.getCodigo();
-        textNome.setText(ambiente.getNome());
-        ComboBoxTipoAmbiente.setSelectedItem(ambiente.getTipoAmbiente());
-        spinnerCapacidade.setValue(ambiente.getCapacidade());
-        textLocalizacao.setText(ambiente.getLocalizacao());
+    private void PreencheCampos(Pessoa pessoa) {
+        codigo = pessoa.getCodigo();
+        textNome.setText(pessoa.getNome());
+        textCpf.setText(pessoa.getCpf());
+        textIdade.setText(pessoa.getIdade().toString());
+        textSexo.setText(pessoa.getSexo());
+        ComboBoxContato.setSelectedItem(pessoa.getFkContato());
+        ComboBoxEndereco.setSelectedItem(pessoa.getFkEndereco());
     }
 
     /**
@@ -267,26 +293,79 @@ public class PacienteIncluir extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonSalvar1ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_buttonSalvar1ActionPerformed
-
+        
+        //Nome
         if (Validacao.Vazio(textNome.getText())) {
 
             JOptionPane.showMessageDialog(this,
-                "Informe o nome do ambiente",
+                "Informe o nome do pessoa",
                 "Inclusão",
                 JOptionPane.ERROR_MESSAGE);
             return;
         }
+        
+        //CPF
+        if (Validacao.Vazio(textCpf.getText())) {
 
-        Ambiente a = new Ambiente(codigo,
+            JOptionPane.showMessageDialog(this,
+                "Informe o nome do Cpf",
+                "Inclusão",
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+         //Idade
+        if (Validacao.Vazio(textIdade.getText())) {
+
+            JOptionPane.showMessageDialog(this,
+                "Informe a idade",
+                "Inclusão",
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        //sexo
+        if (Validacao.Vazio(textSexo.getText())) {
+
+            JOptionPane.showMessageDialog(this,
+                "Informe o sexo",
+                "Inclusão",
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+         
+        //Contato
+        if (ComboBoxContato.getSelectedIndex()<=-1) {
+
+            JOptionPane.showMessageDialog(this,
+                "Informe o Contato",
+                "Edição",
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        //Endereco
+        if (ComboBoxEndereco.getSelectedIndex()<=-1) {
+
+            JOptionPane.showMessageDialog(this,
+                "Informe o Endereço",
+                "Edição",
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        Pessoa a = new Pessoa(codigo,
                                   textNome.getText(),
-                                  (EnumTipoAmbiente) ComboBoxTipoAmbiente.getSelectedItem(),
-                                  (Integer)spinnerCapacidade.getValue(),
-                                  textLocalizacao.getText()
+                                  textCpf.getText(),
+                                  Integer.parseInt(textIdade.getText()),
+                                  textSexo.getText(),
+                                  (Endereco)ComboBoxEndereco.getSelectedItem(),
+                                  (Contato)ComboBoxContato.getSelectedItem()
         );
         
         try {
-            servico.salvar(a);
-        } catch (ExcecaoDAO|ExcecaoValidacao|ExcecaoServico e) {
+            servico.editar(a);
+        } catch (ExcecaoDao|ExcecaoValidacao|ExcecaoServico e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }

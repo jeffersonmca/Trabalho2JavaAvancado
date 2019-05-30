@@ -1,4 +1,4 @@
-package visao.paciente;
+package visao.permissao;
 
 import excecao.ExcecaoDao;
 import excecao.ExcecaoServico;
@@ -7,12 +7,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -23,45 +20,31 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 import javax.swing.WindowConstants;
-import modelo.Paciente;
-import modelo.Pessoa;
-import servico.ServicoPaciente;
-import servico.ServicoPessoa;
+import modelo.Permissao;
+import servico.ServicoPermissao;
 
-public class PacienteEditar extends javax.swing.JDialog {
+public class PermissaoEditar extends javax.swing.JDialog {
 
-    private ServicoPaciente servico;
+    private ServicoPermissao servico;
     private Integer codigo;
-    private ServicoPessoa pesServico;
     
-    public PacienteEditar(java.awt.Frame parent, boolean modal, ServicoPaciente servico, Paciente paciente) {
+    public PermissaoEditar(java.awt.Frame parent, boolean modal, ServicoPermissao servico, Permissao permissao) {
         super(parent, modal);
         initComponents();
         
         this.servico = servico;
         
         PreencheComboBox();
-        PreencheCampos(paciente);
+        PreencheCampos(permissao);
     }
     
     private void PreencheComboBox() {
-        //Pessoa
-        List<Pessoa> lista1 = null;
-        try {
-            lista1 = pesServico.buscarTodos();
-        } catch (ExcecaoDao ex) {}
-        
-        Vector<Pessoa> vetor1 = new Vector<>(lista1);
-        
-        DefaultComboBoxModel dcbmPessoa =
-               new DefaultComboBoxModel(vetor1);
-        ComboBoxPessoa.setModel(dcbmPessoa);
+       
     }
     
-    private void PreencheCampos(Paciente paciente) {
-        codigo = paciente.getCodigo();
-        textConvenio.setText(paciente.getNome());
-        ComboBoxPessoa.setSelectedItem(paciente.getFkPessoa());
+    private void PreencheCampos(Permissao permissao) {
+        codigo = permissao.getCodigo();
+        textDescricao.setText(permissao.getDescricao());
     }
 
     /**
@@ -87,9 +70,7 @@ public class PacienteEditar extends javax.swing.JDialog {
         buttonCancelar = new JButton();
         jPanel1 = new JPanel();
         jLabel1 = new JLabel();
-        textConvenio = new JTextField();
-        ComboBoxPessoa = new JComboBox<>();
-        jLabel3 = new JLabel();
+        textDescricao = new JTextField();
 
         jPanel2.setBorder(BorderFactory.createEtchedBorder());
 
@@ -165,37 +146,31 @@ public class PacienteEditar extends javax.swing.JDialog {
 
         jPanel1.setBorder(BorderFactory.createEtchedBorder());
 
-        jLabel1.setText("Convenio");
+        jLabel1.setText("Permissao");
 
-        jLabel3.setForeground(new Color(255, 0, 0));
-        jLabel3.setText("Pessoa");
+        textDescricao.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                textDescricaoActionPerformed(evt);
+            }
+        });
 
         GroupLayout jPanel1Layout = new GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(24, 24, 24)
-                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                            .addComponent(textConvenio)
-                            .addComponent(ComboBoxPessoa, 0, 190, Short.MAX_VALUE)))
-                    .addComponent(jLabel3))
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLabel1)
+                .addGap(24, 24, 24)
+                .addComponent(textDescricao, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(143, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(textConvenio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(ComboBoxPessoa, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(46, Short.MAX_VALUE))
+                    .addComponent(textDescricao, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(93, Short.MAX_VALUE))
         );
 
         GroupLayout layout = new GroupLayout(getContentPane());
@@ -221,28 +196,17 @@ public class PacienteEditar extends javax.swing.JDialog {
 
     private void buttonSalvar1ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_buttonSalvar1ActionPerformed
 
-        //Pessoa
-        if (ComboBoxPessoa.getSelectedIndex()<=-1) {
-
-            JOptionPane.showMessageDialog(this,
-                "Informe a Pessoa",
-                "Edição",
-                JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        Paciente a = new Paciente(codigo,
-                                  textConvenio.getText(),
-                                  (Pessoa)ComboBoxPessoa.getSelectedItem()
+        Permissao a = new Permissao(codigo,
+                textDescricao.getText()                                 
         );
+        
         try {
-                servico.editar(a);
-            
-        }catch (ExcecaoDao|ExcecaoServico e){
+            servico.editar(a);
+        } catch (ExcecaoDao|ExcecaoServico e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         } catch (ExcecaoValidacao ex) {
-                Logger.getLogger(PacienteEditar.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PermissaoEditar.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         setVisible(false);
@@ -254,14 +218,16 @@ public class PacienteEditar extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_buttonCancelarActionPerformed
 
+    private void textDescricaoActionPerformed(ActionEvent evt) {//GEN-FIRST:event_textDescricaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textDescricaoActionPerformed
+
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private JComboBox<String> ComboBoxPessoa;
     private JComboBox<String> ComboBoxTipoAmbiente1;
     private JButton buttonCancelar;
     private JButton buttonSalvar1;
     private JLabel jLabel1;
-    private JLabel jLabel3;
     private JLabel jLabel5;
     private JLabel jLabel6;
     private JLabel jLabel7;
@@ -270,7 +236,7 @@ public class PacienteEditar extends javax.swing.JDialog {
     private JPanel jPanel2;
     private JPanel jPanel3;
     private JSpinner spinnerCapacidade1;
-    private JTextField textConvenio;
+    private JTextField textDescricao;
     private JTextField textLocalizacao1;
     private JTextField textNome1;
     // End of variables declaration//GEN-END:variables

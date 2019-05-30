@@ -16,9 +16,9 @@ import javax.persistence.Transient;
 @Entity
 public class Secretario {
 
-    public Secretario(Integer codigo, String nome, Pessoa fkPessoa) {
+    public Secretario(Integer codigo, String periodoTrabalho, Pessoa fkPessoa) {
         this.codigo = codigo;
-        this.nome = nome;
+        this.periodoTrabalho = periodoTrabalho;
         this.fkPessoa = fkPessoa;
     }
 
@@ -39,7 +39,7 @@ public class Secretario {
     private Integer codigo;
 
     @Column(name = "sec_periodo_trabalho", length = TAMANHO_PERIODO_TRABALHO)
-    private String nome;
+    private String periodoTrabalho;
     
     @JoinColumn(name = "sec_pess_codigo", nullable = false)
     private Pessoa fkPessoa;
@@ -52,12 +52,12 @@ public class Secretario {
         this.codigo = codigo;
     }
 
-    public String getNome() {
-        return nome;
+    public String getPeriodoTrabalho() {
+        return periodoTrabalho;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setPeriodoTrabalho(String periodoTrabalho) {
+        this.periodoTrabalho = periodoTrabalho;
     }
 
     public Pessoa getFkPessoa() {
@@ -95,7 +95,7 @@ public class Secretario {
 
     @Override
     public String toString() {
-        return "Secretario{" + "codigo=" + codigo + ", nome=" + nome + ", fkPessoa=" + fkPessoa + '}';
+        return "Secretario{" + "codigo=" + codigo + ", periodoTrabalho=" + periodoTrabalho + ", fkPessoa=" + fkPessoa + '}';
     }
     
     
