@@ -151,7 +151,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="63" max="32767" attributes="0"/>
+                  <EmptySpace pref="57" max="32767" attributes="0"/>
               </Group>
           </Group>
       </Group>
@@ -210,27 +210,20 @@
                       <Component id="jLabel11" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="textHorarioFim" alignment="0" pref="212" max="32767" attributes="0"/>
-                                      <Component id="textHorarioInicio" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="textData" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="textData1" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="textProntuario" max="32767" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              </Group>
-                              <Component id="ComboBoxPaciente" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="textHorarioFim" alignment="0" max="32767" attributes="0"/>
+                              <Component id="textHorarioInicio" alignment="0" max="32767" attributes="0"/>
+                              <Component id="textData" alignment="0" max="32767" attributes="0"/>
+                              <Component id="textValor" alignment="0" max="32767" attributes="0"/>
+                              <Component id="textProntuario" max="32767" attributes="0"/>
+                              <Component id="ComboBoxMedico" alignment="0" pref="212" max="32767" attributes="0"/>
                           </Group>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="ComboBoxMedico" min="-2" pref="212" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="ComboBoxPaciente" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -244,12 +237,16 @@
                       <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="textProntuario" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="ComboBoxMedico" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                          <Component id="ComboBoxMedico" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <EmptySpace min="4" pref="4" max="-2" attributes="0"/>
@@ -278,7 +275,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="jLabel11" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="textData1" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="textValor" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -300,6 +297,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="textProntuario">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textProntuarioActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="textHorarioInicio">
           <Events>
@@ -317,6 +317,9 @@
               <StringArray count="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ComboBoxMedicoActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
@@ -367,9 +370,9 @@
             <Property name="text" type="java.lang.String" value="Valor"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="textData1">
+        <Component class="javax.swing.JTextField" name="textValor">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textData1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textValorActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

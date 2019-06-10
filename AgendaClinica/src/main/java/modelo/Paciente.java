@@ -16,9 +16,9 @@ import javax.persistence.Transient;
 @Entity
 public class Paciente {
 
-    public Paciente(Integer codigo, String nome, Pessoa fkPessoa) {
+    public Paciente(Integer codigo, String convenio, Pessoa fkPessoa) {
         this.codigo = codigo;
-        this.nome = nome;
+        this.convenio = convenio;
         this.fkPessoa = fkPessoa;
     }
 
@@ -38,7 +38,7 @@ public class Paciente {
     private Integer codigo;
 
     @Column(name = "pac_convenio", length = TAMANHO_CONVENIO)
-    private String nome;
+    private String convenio;
     
     @JoinColumn(name = "pac_pes_codigo", nullable = false)
     private Pessoa fkPessoa;
@@ -51,12 +51,12 @@ public class Paciente {
         this.codigo = codigo;
     }
 
-    public String getNome() {
-        return nome;
+    public String getConvenio() {
+        return convenio;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setConvenio(String convenio) {
+        this.convenio = convenio;
     }
 
     public Pessoa getFkPessoa() {
@@ -94,7 +94,7 @@ public class Paciente {
 
     @Override
     public String toString() {
-        return "Paciente{" + "codigo=" + codigo + ", nome=" + nome + ", fkPessoa=" + fkPessoa + '}';
+        return "Paciente{" + "codigo=" + codigo + ", convenio=" + convenio + ", fkPessoa=" + fkPessoa + '}';
     }
     
 }
