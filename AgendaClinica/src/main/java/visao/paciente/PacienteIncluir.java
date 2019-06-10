@@ -33,7 +33,7 @@ public class PacienteIncluir extends javax.swing.JDialog {
     private ServicoPaciente servico;
     private ServicoPessoa pesServico;
     
-    public PacienteIncluir(java.awt.Frame parent, boolean modal, ServicoPaciente servico, Paciente paciente) {
+    public PacienteIncluir(java.awt.Frame parent, boolean modal, ServicoPaciente servico) {
         super(parent, modal);
         initComponents();
         

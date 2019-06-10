@@ -1,23 +1,24 @@
 package visao.permissao;
 
-import visao.paciente.*;
-import visao.medico.*;
-import visao.especializacao.*;
-import visao.contato.*;
+import excecao.ExcecaoDao;
+import excecao.ExcecaoServico;
 import java.awt.Cursor;
 import java.util.List;
 import javax.swing.JOptionPane;
+import modelo.Permissao;
+import servico.ServicoPermissao;
+import visao.permissao.*;
 
 public class PermissaoListagem extends javax.swing.JFrame {
 
-    private ServicoAmbiente service;
-    private List<Ambiente> dados;
-    private AmbienteTableModel tabModel;
+    private ServicoPermissao service;
+    private List<Permissao> dados;
+    private PermissaoTableModel tabModel;
     
     public PermissaoListagem() {
         
         initComponents();
-        service = new ServicoAmbiente();
+        service = new ServicoPermissao();
         atualizaDados();
     }
 
@@ -29,7 +30,7 @@ public class PermissaoListagem extends javax.swing.JFrame {
 
             try {
                 dados = service.buscarTodos();
-            } catch (ExcecaoDAO e) {
+            } catch (ExcecaoDao e) {
                 JOptionPane.showMessageDialog(this, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
                 return ;
             } catch (Exception e) {
@@ -37,7 +38,7 @@ public class PermissaoListagem extends javax.swing.JFrame {
                 return ;
             }
 
-            tabModel = new AmbienteTableModel(dados);
+            tabModel = new PermissaoTableModel(dados);
             jTable1.setModel(tabModel);
         
         } finally {
@@ -183,7 +184,7 @@ public class PermissaoListagem extends javax.swing.JFrame {
             return;
         }
         
-        Ambiente aux = dados.get(jTable1.getSelectedRow());        
+        Permissao aux = dados.get(jTable1.getSelectedRow());        
         
         if (aux == null){            
           JOptionPane.showMessageDialog(this, "Registro não encontrado.");  
@@ -191,8 +192,7 @@ public class PermissaoListagem extends javax.swing.JFrame {
         } 
         
         if (JOptionPane.showConfirmDialog(this, 
-                "Confirma a remoção do ambiente: "
-                        + aux.getNome()+"?",
+                "Confirma a remoção do permissao?",
                 "Remoção",                
                   JOptionPane.YES_NO_OPTION
                       )
@@ -205,7 +205,7 @@ public class PermissaoListagem extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Registro removido com sucesso.");
                 return;
                 
-            } catch (ExcecaoDAO|ExcecaoServico e) {
+            } catch (ExcecaoDao|ExcecaoServico e) {
                 JOptionPane.showMessageDialog(this, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             }              
         }
@@ -213,7 +213,7 @@ public class PermissaoListagem extends javax.swing.JFrame {
 
     private void jbtnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnIncluirActionPerformed
         
-        AmbienteIncluir tela = new AmbienteIncluir(this, true, service);
+        PermissaoIncluir tela = new PermissaoIncluir(this, true, service);
         tela.setVisible(true);
         atualizaDados();
     }//GEN-LAST:event_jbtnIncluirActionPerformed
@@ -225,14 +225,14 @@ public class PermissaoListagem extends javax.swing.JFrame {
             return;
         }
         
-        Ambiente aux = dados.get(jTable1.getSelectedRow());        
+        Permissao aux = dados.get(jTable1.getSelectedRow());        
         
         if (aux == null){            
           JOptionPane.showMessageDialog(this, "Registro não encontrado.");  
           return;   
         } 
 
-        AmbienteEdita tela = new AmbienteEdita(this, true, service, aux);
+        PermissaoEditar tela = new PermissaoEditar(this, true, service, aux);
         
         tela.setVisible(true);
         atualizaDados();

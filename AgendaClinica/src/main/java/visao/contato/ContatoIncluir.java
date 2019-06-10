@@ -25,7 +25,7 @@ public class ContatoIncluir extends javax.swing.JDialog {
 
     private ServicoContato servico;
     
-    public ContatoIncluir(java.awt.Frame parent, boolean modal, ServicoContato servico, Contato contato) {
+    public ContatoIncluir(java.awt.Frame parent, boolean modal, ServicoContato servico) {
         super(parent, modal);
         initComponents();
         

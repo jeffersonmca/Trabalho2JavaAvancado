@@ -1,23 +1,24 @@
 package visao.usuario;
 
-import visao.secretario.*;
-import visao.medico.*;
-import visao.especializacao.*;
-import visao.contato.*;
+import excecao.ExcecaoDao;
+import excecao.ExcecaoServico;
 import java.awt.Cursor;
 import java.util.List;
 import javax.swing.JOptionPane;
+import modelo.Usuario;
+import servico.ServicoUsuario;
+import visao.usuario.*;
 
 public class UsuarioListagem extends javax.swing.JFrame {
 
-    private ServicoAmbiente service;
-    private List<Ambiente> dados;
-    private AmbienteTableModel tabModel;
+    private ServicoUsuario service;
+    private List<Usuario> dados;
+    private UsuarioTableModel tabModel;
     
     public UsuarioListagem() {
         
         initComponents();
-        service = new ServicoAmbiente();
+        service = new ServicoUsuario();
         atualizaDados();
     }
 
@@ -37,7 +38,7 @@ public class UsuarioListagem extends javax.swing.JFrame {
                 return ;
             }
 
-            tabModel = new AmbienteTableModel(dados);
+            tabModel = new UsuarioTableModel(dados);
             jTable1.setModel(tabModel);
         
         } finally {
@@ -183,7 +184,7 @@ public class UsuarioListagem extends javax.swing.JFrame {
             return;
         }
         
-        Ambiente aux = dados.get(jTable1.getSelectedRow());        
+        Usuario aux = dados.get(jTable1.getSelectedRow());        
         
         if (aux == null){            
           JOptionPane.showMessageDialog(this, "Registro não encontrado.");  
@@ -191,8 +192,7 @@ public class UsuarioListagem extends javax.swing.JFrame {
         } 
         
         if (JOptionPane.showConfirmDialog(this, 
-                "Confirma a remoção do ambiente: "
-                        + aux.getNome()+"?",
+                "Confirma a remoção do usuario?",
                 "Remoção",                
                   JOptionPane.YES_NO_OPTION
                       )
@@ -205,7 +205,7 @@ public class UsuarioListagem extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Registro removido com sucesso.");
                 return;
                 
-            } catch (ExcecaoDAO|ExcecaoServico e) {
+            } catch (ExcecaoDao|ExcecaoServico e) {
                 JOptionPane.showMessageDialog(this, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             }              
         }
@@ -213,7 +213,7 @@ public class UsuarioListagem extends javax.swing.JFrame {
 
     private void jbtnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnIncluirActionPerformed
         
-        AmbienteIncluir tela = new AmbienteIncluir(this, true, service);
+        UsuarioIncluir tela = new UsuarioIncluir(this, true, service);
         tela.setVisible(true);
         atualizaDados();
     }//GEN-LAST:event_jbtnIncluirActionPerformed
@@ -225,14 +225,14 @@ public class UsuarioListagem extends javax.swing.JFrame {
             return;
         }
         
-        Ambiente aux = dados.get(jTable1.getSelectedRow());        
+        Usuario aux = dados.get(jTable1.getSelectedRow());        
         
         if (aux == null){            
           JOptionPane.showMessageDialog(this, "Registro não encontrado.");  
           return;   
         } 
 
-        AmbienteEdita tela = new AmbienteEdita(this, true, service, aux);
+        UsuarioEditar tela = new UsuarioEditar(this, true, service, aux);
         
         tela.setVisible(true);
         atualizaDados();

@@ -32,7 +32,7 @@ public class SecretarioIncluir extends javax.swing.JDialog {
     private ServicoSecretario servico;
     private ServicoPessoa pesServico;
     
-    public SecretarioIncluir(java.awt.Frame parent, boolean modal, ServicoSecretario servico, Secretario secretario) {
+    public SecretarioIncluir(java.awt.Frame parent, boolean modal, ServicoSecretario servico) {
         super(parent, modal);
         initComponents();
         

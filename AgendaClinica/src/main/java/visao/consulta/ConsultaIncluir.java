@@ -46,7 +46,7 @@ public class ConsultaIncluir extends javax.swing.JDialog {
     private ServicoMedico medServico;
     private ServicoPaciente pacServico;
     
-    public ConsultaIncluir(java.awt.Frame parent, boolean modal, ServicoConsulta servico, Consulta consulta) {
+    public ConsultaIncluir(java.awt.Frame parent, boolean modal, ServicoConsulta servico) {
         super(parent, modal);
         initComponents();
         

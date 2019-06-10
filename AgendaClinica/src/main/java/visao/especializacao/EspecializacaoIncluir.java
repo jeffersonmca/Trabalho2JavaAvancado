@@ -25,7 +25,7 @@ public class EspecializacaoIncluir extends javax.swing.JDialog {
 
     private ServicoEspecializacao servico;
     
-    public EspecializacaoIncluir(java.awt.Frame parent, boolean modal, ServicoEspecializacao servico, Especializacao especializacao) {
+    public EspecializacaoIncluir(java.awt.Frame parent, boolean modal, ServicoEspecializacao servico) {
         super(parent, modal);
         initComponents();
         

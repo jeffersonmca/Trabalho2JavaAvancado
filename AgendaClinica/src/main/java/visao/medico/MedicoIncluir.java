@@ -31,7 +31,7 @@ public class MedicoIncluir extends javax.swing.JDialog {
     private ServicoMedico servico;
     private ServicoPessoa pesServico;
     
-    public MedicoIncluir(java.awt.Frame parent, boolean modal, ServicoMedico servico, Medico medico) {
+    public MedicoIncluir(java.awt.Frame parent, boolean modal, ServicoMedico servico) {
         super(parent, modal);
         initComponents();
         

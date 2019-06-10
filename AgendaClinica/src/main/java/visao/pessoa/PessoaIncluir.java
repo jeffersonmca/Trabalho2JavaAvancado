@@ -35,7 +35,7 @@ public class PessoaIncluir extends javax.swing.JDialog {
     private ServicoEndereco endServico;
     private ServicoContato conServico;
     
-    public PessoaIncluir(java.awt.Frame parent, boolean modal, ServicoPessoa servico, Pessoa pessoa) {
+    public PessoaIncluir(java.awt.Frame parent, boolean modal, ServicoPessoa servico) {
         super(parent, modal);
         initComponents();
         

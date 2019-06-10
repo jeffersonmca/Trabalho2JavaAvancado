@@ -1,20 +1,25 @@
 package visao.especializacao;
 
+import excecao.ExcecaoDao;
+import excecao.ExcecaoServico;
 import visao.contato.*;
 import java.awt.Cursor;
 import java.util.List;
 import javax.swing.JOptionPane;
+import modelo.Especializacao;
+import servico.ServicoEspecializacao;
+import visao.especializacao.*;
 
 public class EspecializacaoListagem extends javax.swing.JFrame {
 
-    private ServicoAmbiente service;
-    private List<Ambiente> dados;
-    private AmbienteTableModel tabModel;
+    private ServicoEspecializacao service;
+    private List<Especializacao> dados;
+    private EspecializacaoTableModel tabModel;
     
     public EspecializacaoListagem() {
         
         initComponents();
-        service = new ServicoAmbiente();
+        service = new ServicoEspecializacao();
         atualizaDados();
     }
 
@@ -26,7 +31,7 @@ public class EspecializacaoListagem extends javax.swing.JFrame {
 
             try {
                 dados = service.buscarTodos();
-            } catch (ExcecaoDAO e) {
+            } catch (ExcecaoDao e) {
                 JOptionPane.showMessageDialog(this, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
                 return ;
             } catch (Exception e) {
@@ -34,7 +39,7 @@ public class EspecializacaoListagem extends javax.swing.JFrame {
                 return ;
             }
 
-            tabModel = new AmbienteTableModel(dados);
+            tabModel = new EspecializacaoTableModel(dados);
             jTable1.setModel(tabModel);
         
         } finally {
@@ -180,7 +185,7 @@ public class EspecializacaoListagem extends javax.swing.JFrame {
             return;
         }
         
-        Ambiente aux = dados.get(jTable1.getSelectedRow());        
+        Especializacao aux = dados.get(jTable1.getSelectedRow());        
         
         if (aux == null){            
           JOptionPane.showMessageDialog(this, "Registro não encontrado.");  
@@ -188,8 +193,7 @@ public class EspecializacaoListagem extends javax.swing.JFrame {
         } 
         
         if (JOptionPane.showConfirmDialog(this, 
-                "Confirma a remoção do ambiente: "
-                        + aux.getNome()+"?",
+                "Confirma a remoção do especializacao?",
                 "Remoção",                
                   JOptionPane.YES_NO_OPTION
                       )
@@ -202,7 +206,7 @@ public class EspecializacaoListagem extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Registro removido com sucesso.");
                 return;
                 
-            } catch (ExcecaoDAO|ExcecaoServico e) {
+            } catch (ExcecaoDao|ExcecaoServico e) {
                 JOptionPane.showMessageDialog(this, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             }              
         }
@@ -210,7 +214,7 @@ public class EspecializacaoListagem extends javax.swing.JFrame {
 
     private void jbtnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnIncluirActionPerformed
         
-        AmbienteIncluir tela = new AmbienteIncluir(this, true, service);
+        EspecializacaoIncluir tela = new EspecializacaoIncluir(this, true, service);
         tela.setVisible(true);
         atualizaDados();
     }//GEN-LAST:event_jbtnIncluirActionPerformed
@@ -222,14 +226,14 @@ public class EspecializacaoListagem extends javax.swing.JFrame {
             return;
         }
         
-        Ambiente aux = dados.get(jTable1.getSelectedRow());        
+        Especializacao aux = dados.get(jTable1.getSelectedRow());        
         
         if (aux == null){            
           JOptionPane.showMessageDialog(this, "Registro não encontrado.");  
           return;   
         } 
 
-        AmbienteEdita tela = new AmbienteEdita(this, true, service, aux);
+        EspecializacaoEditar tela = new EspecializacaoEditar(this, true, service, aux);
         
         tela.setVisible(true);
         atualizaDados();

@@ -27,7 +27,7 @@ public class PermissaoIncluir extends javax.swing.JDialog {
 
     private ServicoPermissao servico;
     
-    public PermissaoIncluir(java.awt.Frame parent, boolean modal, ServicoPermissao servico, Permissao permissao) {
+    public PermissaoIncluir(java.awt.Frame parent, boolean modal, ServicoPermissao servico) {
         super(parent, modal);
         initComponents();
         

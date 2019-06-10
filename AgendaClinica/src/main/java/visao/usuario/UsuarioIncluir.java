@@ -32,7 +32,7 @@ public class UsuarioIncluir extends javax.swing.JDialog {
     private ServicoUsuario servico;
     private ServicoPessoa pesServico;
     
-    public UsuarioIncluir(java.awt.Frame parent, boolean modal, ServicoUsuario servico, Usuario usuario) {
+    public UsuarioIncluir(java.awt.Frame parent, boolean modal, ServicoUsuario servico) {
         super(parent, modal);
         initComponents();
         
