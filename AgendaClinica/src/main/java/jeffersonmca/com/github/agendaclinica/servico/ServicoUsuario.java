@@ -109,15 +109,15 @@ public class ServicoUsuario {
         if (opcao.equals("SEM FILTRO")) {
             return dao.buscarPor(opcao, null);
         }
-
-//CODIGO
-//AUTENTICADOR
         
         // Se a opcao NAO for SEM FILTRO, agora iremos verificar se o campo esta vazio
         if  (!(opcao.equals("SEM FILTRO")) && (!Validacao.Vazio(dado))) {
             
             // Devem ser INTEGER
-            if (opcao.equals("CODIGO")) {
+            if ((opcao.equals("CODIGO")) ||
+                (opcao.equals("IDADE")) ||
+                (opcao.equals("ID ENDERECO")) ||
+                (opcao.equals("ID CONTATO"))) {
                 
                 // Verifica se string eh numero
                 boolean ehNumero = dado.matches("[0-9]+");
@@ -127,12 +127,41 @@ public class ServicoUsuario {
             }
             
             // Devem ser STRING
-            if (opcao.equals("AUTENTICADOR")) {
+            if ((opcao.equals("NOME")) ||
+                (opcao.equals("CPF")) ||
+                (opcao.equals("SEXO")) ||
+                (opcao.equals("AUTENTICADOR"))) {
                 
                 return dao.buscarPor(opcao, dado);
             }
         }
         
         return null;
+    }
+    
+    public Usuario buscarPorAutenticador(String autenticador) throws ExcecaoServico,  ExcecaoDAO {
+        
+        try {
+            
+            /*Regra de negocio*/
+            if (!Validacao.Vazio(autenticador)) {
+                return dao.buscarPorAutenticador(autenticador);
+            }
+            
+            return null;
+            
+        }catch(ExcecaoDAO e) {
+            throw e;
+        }catch(Exception e){
+            throw new ExcecaoServico("Houve erro ao requisitar a busca de um Usuário!");
+        }
+    }
+
+    public boolean logar(Usuario login, String senha) {
+        
+        // Se as senhas baterem entao ele pode logar
+        if (login.getSenha().equals(senha))
+             return true;
+        else return false;
     }
 }

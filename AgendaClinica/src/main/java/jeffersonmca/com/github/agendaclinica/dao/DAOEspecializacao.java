@@ -12,9 +12,7 @@ public class DAOEspecializacao extends DAOGenerico<Especializacao, Integer> {
             
             String sql = "select e from Especializacao e "
                     + " where (1 = 1) ";
-//CODIGO
-//NOME
-//AREA
+
             if (!(opcao.equals("SEM FILTRO"))) {
                
                 if (opcao.equals("CODIGO")) {
@@ -30,6 +28,24 @@ public class DAOEspecializacao extends DAOGenerico<Especializacao, Integer> {
             
         } catch (Exception e) {
             throw new ExcecaoDAO("Houve erro ao pegar os registros!");
+        }
+    }
+    
+    public List<Especializacao> buscarEspecializacoesForaDaGrid(List<Especializacao> especializacoes) throws ExcecaoDAO {
+        try {         
+            
+            String sql = "select e from Especializacao e "
+                    + " where (1 = 1) ";
+            
+            for (Especializacao e : especializacoes) {
+                if (e != null) {
+                    sql += " and e.codigo != " + e.getCodigo();
+                }
+            }
+            
+            return em.createQuery(sql).getResultList();
+        } catch (Exception e) {
+            throw new ExcecaoDAO("Houve erro ao pegar as especializações!");
         }
     }
 }

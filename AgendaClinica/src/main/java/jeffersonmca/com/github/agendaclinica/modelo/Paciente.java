@@ -34,14 +34,6 @@ public class Paciente extends Pessoa {
         this.convenio = convenio;
     }
 
-    public Integer getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(Integer codigo) {
-        this.codigo = codigo;
-    }
-
     public String getConvenio() {
         return convenio;
     }
@@ -77,6 +69,6 @@ public class Paciente extends Pessoa {
 
     @Override
     public String toString() {
-        return this.codigo + "-" + this.getNome();
+        return this.getCodigo() + "-" + this.getNome();
     }
 }

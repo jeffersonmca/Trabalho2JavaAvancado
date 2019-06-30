@@ -12,13 +12,23 @@ public class DAOMedico extends DAOGenerico<Medico, Integer> {
             
             String sql = "select m from Medico m "
                     + " where (1 = 1) ";
-//CODIGO
-//PERIODO TRABALHO
 
             if (!(opcao.equals("SEM FILTRO"))) {
                
                 if (opcao.equals("CODIGO")) {
                     sql += " and m.codigo = " + dado;
+                }else if (opcao.equals("NOME")) {
+                    sql += " and m.nome like '%" + dado + "%'";
+                }else if (opcao.equals("CPF")) {
+                    sql += " and m.cpf like '%" + dado + "%'";
+                }else if (opcao.equals("IDADE")) {
+                    sql += " and m.idade = " + dado;
+                }else if (opcao.equals("SEXO")) {
+                    sql += " and m.sexo like '%" + dado + "%'";
+                }else if (opcao.equals("ID ENDERECO")) {
+                    sql += " and m.endereco.codigo = " + dado;
+                }else if (opcao.equals("ID CONTATO")) {
+                    sql += " and m.contato.codigo = " + dado;
                 }else if (opcao.equals("PERIODO TRABALHO")) {
                     sql += " and m.periodoTrabalho like '%" + dado + "%'";
                 }

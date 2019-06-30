@@ -1,17 +1,24 @@
 package jeffersonmca.com.github.agendaclinica.visao;
 
+import java.util.Date;
+import java.util.List;
+import javax.swing.JOptionPane;
+import jeffersonmca.com.github.agendaclinica.modelo.Usuario;
+import jeffersonmca.com.github.agendaclinica.modelo.Permissao;
+import jeffersonmca.com.github.agendaclinica.util.Validacao;
+import jeffersonmca.com.github.agendaclinica.util.Conversoes;
 import jeffersonmca.com.github.agendaclinica.visao.consulta.ConsultaListagem;
 import jeffersonmca.com.github.agendaclinica.visao.consulta.ConsultaPesquisa;
 import jeffersonmca.com.github.agendaclinica.visao.contato.ContatoListagem;
 import jeffersonmca.com.github.agendaclinica.visao.contato.ContatoPesquisa;
 import jeffersonmca.com.github.agendaclinica.visao.endereco.EnderecoListagem;
 import jeffersonmca.com.github.agendaclinica.visao.endereco.EnderecoPesquisa;
+import jeffersonmca.com.github.agendaclinica.visao.especializacao.EspecializacaoListagem;
+import jeffersonmca.com.github.agendaclinica.visao.especializacao.EspecializacaoPesquisa;
 import jeffersonmca.com.github.agendaclinica.visao.medico.MedicoListagem;
 import jeffersonmca.com.github.agendaclinica.visao.medico.MedicoPesquisa;
 import jeffersonmca.com.github.agendaclinica.visao.paciente.PacienteListagem;
 import jeffersonmca.com.github.agendaclinica.visao.paciente.PacientePesquisa;
-import jeffersonmca.com.github.agendaclinica.visao.permissao.PermissaoListagem;
-import jeffersonmca.com.github.agendaclinica.visao.permissao.PermissaoPesquisa;
 import jeffersonmca.com.github.agendaclinica.visao.secretario.SecretarioListagem;
 import jeffersonmca.com.github.agendaclinica.visao.secretario.SecretarioPesquisa;
 import jeffersonmca.com.github.agendaclinica.visao.usuario.UsuarioListagem;
@@ -19,9 +26,73 @@ import jeffersonmca.com.github.agendaclinica.visao.usuario.UsuarioPesquisa;
 
 public class Principal extends javax.swing.JFrame {
     
-    public Principal() {
+    private Usuario usuario;
+    private boolean acessoTelaConsulta;
+    private boolean acessoTelaContato;
+    private boolean acessoTelaEndereco;
+    private boolean acessoTelaEspecializacao;
+    private boolean acessoTelaMedico;
+    private boolean acessoTelaSecretario;
+    private boolean acessoTelaUsuario;
+    private boolean acessoADM;
+    
+    public Principal(Usuario usuario) {
         
         initComponents();
+        
+        this.usuario = usuario;
+        
+        this.acessoTelaConsulta = false;
+        this.acessoTelaContato = false;
+        this.acessoTelaEndereco = false;
+        this.acessoTelaEspecializacao = false;
+        this.acessoTelaMedico = false;
+        this.acessoTelaSecretario = false;
+        this.acessoTelaUsuario = false;
+        this.acessoADM = false;
+        
+        // Preenche informacoes
+        PreencheInformacoes();
+        
+        // Verifica quais telas este usuario tem permissao de acesso
+        verificaPermissoes();
+    }
+    
+    // Preenche informacoes
+    private void PreencheInformacoes() {
+        
+        labelAutenticadorLogado.setText(usuario.getAutenticador());
+        labelUsuarioLogado.setText(usuario.getNome());
+        labelData.setText(Conversoes.dateToStr(new Date()));
+    }
+    
+    // Verifica quais telas este usuario tem permissao de acesso
+    private void verificaPermissoes() {
+        
+        List<Permissao> permissoes = null;
+        permissoes = usuario.getPermissoes();
+        for (Permissao p : permissoes) {
+            
+            if (Validacao.Alocado(p)) {
+                
+                if (p.getDescricao().equals("Consulta"))
+                    acessoTelaConsulta = true;
+                else if (p.getDescricao().equals("Contato"))
+                    acessoTelaContato = true;
+                else if (p.getDescricao().equals("Endereco"))
+                    acessoTelaEndereco = true;
+                else if (p.getDescricao().equals("Especialização"))
+                    acessoTelaEspecializacao = true;
+                else if (p.getDescricao().equals("Médico"))
+                    acessoTelaMedico = true;
+                else if (p.getDescricao().equals("Secretário"))
+                    acessoTelaSecretario = true;
+                else if (p.getDescricao().equals("Usuário"))
+                    acessoTelaUsuario = true;
+                else if (p.getDescricao().equals("ADM"))
+                    acessoADM = true;
+            }
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -34,7 +105,7 @@ public class Principal extends javax.swing.JFrame {
         labelData = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        labelIdLogado = new javax.swing.JLabel();
+        labelAutenticadorLogado = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         cadMenuConsulta = new javax.swing.JMenuItem();
@@ -43,7 +114,6 @@ public class Principal extends javax.swing.JFrame {
         cadMenuEspecializacao = new javax.swing.JMenuItem();
         cadMenuMedico = new javax.swing.JMenuItem();
         cadMenuPaciente = new javax.swing.JMenuItem();
-        cadMenuPermissao = new javax.swing.JMenuItem();
         cadMenuSecretario = new javax.swing.JMenuItem();
         cadMenuUsuario = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
@@ -53,7 +123,6 @@ public class Principal extends javax.swing.JFrame {
         pesMenuEspecializacao = new javax.swing.JMenuItem();
         pesMenuMedico = new javax.swing.JMenuItem();
         pesMenuPaciente = new javax.swing.JMenuItem();
-        pesMenuPermissao = new javax.swing.JMenuItem();
         pesMenuSecretario = new javax.swing.JMenuItem();
         pesMenuUsuario = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
@@ -78,7 +147,7 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel3.setText("Data:");
 
-        jLabel1.setText("id:");
+        jLabel1.setText("Autenticador:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -88,11 +157,11 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelIdLogado, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
+                .addComponent(labelAutenticadorLogado, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelUsuarioLogado, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(labelUsuarioLogado, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -101,16 +170,17 @@ public class Principal extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(labelIdLogado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel2))
+                    .addComponent(labelAutenticadorLogado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(labelUsuarioLogado, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel1)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(labelUsuarioLogado, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
@@ -145,6 +215,11 @@ public class Principal extends javax.swing.JFrame {
         jMenu1.add(cadMenuEndereco);
 
         cadMenuEspecializacao.setText("Especialização");
+        cadMenuEspecializacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cadMenuEspecializacaoActionPerformed(evt);
+            }
+        });
         jMenu1.add(cadMenuEspecializacao);
 
         cadMenuMedico.setText("Médico");
@@ -162,14 +237,6 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jMenu1.add(cadMenuPaciente);
-
-        cadMenuPermissao.setText("Permissão");
-        cadMenuPermissao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cadMenuPermissaoActionPerformed(evt);
-            }
-        });
-        jMenu1.add(cadMenuPermissao);
 
         cadMenuSecretario.setText("Secretário");
         cadMenuSecretario.addActionListener(new java.awt.event.ActionListener() {
@@ -239,14 +306,6 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu3.add(pesMenuPaciente);
 
-        pesMenuPermissao.setText("Permissão");
-        pesMenuPermissao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pesMenuPermissaoActionPerformed(evt);
-            }
-        });
-        jMenu3.add(pesMenuPermissao);
-
         pesMenuSecretario.setText("Secretário");
         pesMenuSecretario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -256,6 +315,11 @@ public class Principal extends javax.swing.JFrame {
         jMenu3.add(pesMenuSecretario);
 
         pesMenuUsuario.setText("Usuário");
+        pesMenuUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pesMenuUsuarioActionPerformed(evt);
+            }
+        });
         jMenu3.add(pesMenuUsuario);
 
         jMenuBar1.add(jMenu3);
@@ -328,38 +392,57 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cadMenuConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadMenuConsultaActionPerformed
-        ConsultaListagem tela = new ConsultaListagem();
-        tela.setVisible(true);
+        if (acessoTelaConsulta || acessoADM) {
+            ConsultaListagem tela = new ConsultaListagem();
+            tela.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(this, "Você não tem permissão para acessar essa tela!", "Dica", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_cadMenuConsultaActionPerformed
 
     private void cadMenuContatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadMenuContatoActionPerformed
-        ContatoListagem tela = new ContatoListagem();
-        tela.setVisible(true);
+        if (acessoTelaContato || acessoADM) {
+            ContatoListagem tela = new ContatoListagem();
+            tela.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(this, "Você não tem permissão para acessar essa tela!", "Dica", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_cadMenuContatoActionPerformed
 
     private void cadMenuEnderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadMenuEnderecoActionPerformed
-        EnderecoListagem tela = new EnderecoListagem();
-        tela.setVisible(true);
+        if (acessoTelaEndereco || acessoADM) {
+            EnderecoListagem tela = new EnderecoListagem();
+            tela.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(this, "Você não tem permissão para acessar essa tela!", "Dica", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_cadMenuEnderecoActionPerformed
 
     private void cadMenuMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadMenuMedicoActionPerformed
-        MedicoListagem tela = new MedicoListagem();
-        tela.setVisible(true);
+        if (acessoTelaMedico || acessoADM) {
+            MedicoListagem tela = new MedicoListagem();
+            tela.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(this, "Você não tem permissão para acessar essa tela!", "Dica", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_cadMenuMedicoActionPerformed
 
-    private void cadMenuPermissaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadMenuPermissaoActionPerformed
-        PermissaoListagem tela = new PermissaoListagem();
-        tela.setVisible(true);
-    }//GEN-LAST:event_cadMenuPermissaoActionPerformed
-
     private void cadMenuSecretarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadMenuSecretarioActionPerformed
-        SecretarioListagem tela = new SecretarioListagem();
-        tela.setVisible(true);
+        if (acessoTelaSecretario || acessoADM) {
+            SecretarioListagem tela = new SecretarioListagem();
+            tela.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(this, "Você não tem permissão para acessar essa tela!", "Dica", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_cadMenuSecretarioActionPerformed
 
     private void cadMenuUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadMenuUsuarioActionPerformed
-        UsuarioListagem tela = new UsuarioListagem();
-        tela.setVisible(true);
+        if (acessoTelaUsuario || acessoADM) {
+            UsuarioListagem tela = new UsuarioListagem();
+            tela.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(this, "Você não tem permissão para acessar essa tela!", "Dica", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_cadMenuUsuarioActionPerformed
 
     private void relMenuConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_relMenuConsultaActionPerformed
@@ -367,48 +450,75 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_relMenuConsultaActionPerformed
 
     private void pesMenuConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesMenuConsultaActionPerformed
-        ConsultaPesquisa tela = new ConsultaPesquisa();
-        tela.setVisible(true);
+        if (acessoTelaConsulta || acessoADM) {
+            ConsultaPesquisa tela = new ConsultaPesquisa();
+            tela.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(this, "Você não tem permissão para acessar essa tela!", "Dica", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_pesMenuConsultaActionPerformed
 
     private void pesMenuContatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesMenuContatoActionPerformed
-        ContatoPesquisa tela = new ContatoPesquisa();
-        tela.setVisible(true);
+        if (acessoTelaContato || acessoADM) {
+            ContatoPesquisa tela = new ContatoPesquisa();
+            tela.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(this, "Você não tem permissão para acessar essa tela!", "Dica", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_pesMenuContatoActionPerformed
 
     private void pesMenuEnderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesMenuEnderecoActionPerformed
-        EnderecoPesquisa tela = new EnderecoPesquisa();
-        tela.setVisible(true);
+        if (acessoTelaEndereco || acessoADM) {
+            EnderecoPesquisa tela = new EnderecoPesquisa();
+            tela.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(this, "Você não tem permissão para acessar essa tela!", "Dica", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_pesMenuEnderecoActionPerformed
 
     private void pesMenuEspecializacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesMenuEspecializacaoActionPerformed
-        MedicoPesquisa tela = new MedicoPesquisa();
-        tela.setVisible(true);
+        if (acessoTelaEspecializacao || acessoADM) {
+            EspecializacaoPesquisa tela = new EspecializacaoPesquisa();
+            tela.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(this, "Você não tem permissão para acessar essa tela!", "Dica", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_pesMenuEspecializacaoActionPerformed
 
     private void pesMenuPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesMenuPacienteActionPerformed
-        PermissaoPesquisa tela = new PermissaoPesquisa();
-        tela.setVisible(true);
+        if (acessoTelaSecretario || acessoADM) {
+            PacientePesquisa tela = new PacientePesquisa();
+            tela.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(this, "Você não tem permissão para acessar essa tela!", "Dica", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_pesMenuPacienteActionPerformed
 
-    private void pesMenuPermissaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesMenuPermissaoActionPerformed
-        SecretarioPesquisa tela = new SecretarioPesquisa();
-        tela.setVisible(true);
-    }//GEN-LAST:event_pesMenuPermissaoActionPerformed
-
     private void pesMenuSecretarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesMenuSecretarioActionPerformed
-        UsuarioPesquisa tela = new UsuarioPesquisa();
-        tela.setVisible(true);
+        if (acessoTelaSecretario || acessoADM) {
+            SecretarioPesquisa tela = new SecretarioPesquisa();
+            tela.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(this, "Você não tem permissão para acessar essa tela!", "Dica", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_pesMenuSecretarioActionPerformed
 
     private void cadMenuPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadMenuPacienteActionPerformed
-        PacienteListagem tela = new PacienteListagem();
-        tela.setVisible(true);
+        if (acessoTelaSecretario || acessoADM) {
+            PacienteListagem tela = new PacienteListagem();
+            tela.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(this, "Você não tem permissão para acessar essa tela!", "Dica", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_cadMenuPacienteActionPerformed
 
     private void pesMenuMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesMenuMedicoActionPerformed
-        PacientePesquisa tela = new PacientePesquisa();
-        tela.setVisible(true);
+        if (acessoTelaMedico || acessoADM) {
+            MedicoPesquisa tela = new MedicoPesquisa();
+            tela.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(this, "Você não tem permissão para acessar essa tela!", "Dica", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_pesMenuMedicoActionPerformed
 
     private void conMenuLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_conMenuLogoutActionPerformed
@@ -420,6 +530,24 @@ public class Principal extends javax.swing.JFrame {
         tela.setVisible(true);
     }//GEN-LAST:event_conMenuLogoutActionPerformed
 
+    private void cadMenuEspecializacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadMenuEspecializacaoActionPerformed
+        if (acessoTelaEspecializacao || acessoADM) {
+            EspecializacaoListagem tela = new EspecializacaoListagem();
+            tela.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(this, "Você não tem permissão para acessar essa tela!", "Dica", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_cadMenuEspecializacaoActionPerformed
+
+    private void pesMenuUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesMenuUsuarioActionPerformed
+        if (acessoTelaUsuario || acessoADM) {
+            UsuarioPesquisa tela = new UsuarioPesquisa();
+            tela.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(this, "Você não tem permissão para acessar essa tela!", "Dica", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_pesMenuUsuarioActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem cadMenuConsulta;
     private javax.swing.JMenuItem cadMenuContato;
@@ -427,7 +555,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem cadMenuEspecializacao;
     private javax.swing.JMenuItem cadMenuMedico;
     private javax.swing.JMenuItem cadMenuPaciente;
-    private javax.swing.JMenuItem cadMenuPermissao;
     private javax.swing.JMenuItem cadMenuSecretario;
     private javax.swing.JMenuItem cadMenuUsuario;
     private javax.swing.JMenuItem conMenuLogout;
@@ -440,8 +567,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel labelAutenticadorLogado;
     private javax.swing.JLabel labelData;
-    private javax.swing.JLabel labelIdLogado;
     private javax.swing.JLabel labelUsuarioLogado;
     private javax.swing.JMenuItem pesMenuConsulta;
     private javax.swing.JMenuItem pesMenuContato;
@@ -449,7 +576,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem pesMenuEspecializacao;
     private javax.swing.JMenuItem pesMenuMedico;
     private javax.swing.JMenuItem pesMenuPaciente;
-    private javax.swing.JMenuItem pesMenuPermissao;
     private javax.swing.JMenuItem pesMenuSecretario;
     private javax.swing.JMenuItem pesMenuUsuario;
     private javax.swing.JMenuItem relMenuConsulta;

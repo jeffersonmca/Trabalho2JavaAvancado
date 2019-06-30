@@ -29,10 +29,10 @@ public class Usuario extends Pessoa {
     @Column(name = "usu_codigo")
     private Integer codigo;
 
-    @Column(name = "usu_autenticador", length = TAMANHO_AUTENTICADOR)
+    @Column(name = "usu_autenticador", nullable = false, unique = true, length = TAMANHO_AUTENTICADOR)
     private String autenticador;
     
-    @Column(name = "usu_senha", length = TAMANHO_SENHA)
+    @Column(name = "usu_senha", nullable = false, length = TAMANHO_SENHA)
     private String senha;
     
     @ManyToMany
@@ -50,14 +50,6 @@ public class Usuario extends Pessoa {
         this.autenticador = autenticador;
         this.senha = senha;
         this.permissoes = permissoes;
-    }
-
-    public Integer getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(Integer codigo) {
-        this.codigo = codigo;
     }
 
     public String getAutenticador() {
@@ -111,6 +103,6 @@ public class Usuario extends Pessoa {
 
     @Override
     public String toString() {
-        return this.codigo + "-" + this.getNome();
+        return this.getCodigo() + "-" + this.getNome();
     }
 }

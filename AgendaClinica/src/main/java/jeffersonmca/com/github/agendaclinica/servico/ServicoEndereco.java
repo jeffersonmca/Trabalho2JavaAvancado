@@ -105,14 +105,6 @@ public class ServicoEndereco {
         if (opcao.equals("SEM FILTRO")) {
             return dao.buscarPor(opcao, null);
         }
-
-//CODIGO
-//RUA
-//BAIRRO
-//CIDADE
-//NUMERO
-//CEP
-//COMPLEMENTO
         
         // Se a opcao NAO for SEM FILTRO, agora iremos verificar se o campo esta vazio
         if  (!(opcao.equals("SEM FILTRO")) && (!Validacao.Vazio(dado))) {

@@ -105,15 +105,15 @@ public class ServicoPaciente {
         if (opcao.equals("SEM FILTRO")) {
             return dao.buscarPor(opcao, null);
         }
-
-//CODIGO
-//CONVENIO
         
         // Se a opcao NAO for SEM FILTRO, agora iremos verificar se o campo esta vazio
         if  (!(opcao.equals("SEM FILTRO")) && (!Validacao.Vazio(dado))) {
             
             // Devem ser INTEGER
-            if (opcao.equals("CODIGO")) {
+            if ((opcao.equals("CODIGO")) ||
+                (opcao.equals("IDADE")) ||
+                (opcao.equals("ID ENDERECO")) ||
+                (opcao.equals("ID CONTATO"))) {
                 
                 // Verifica se string eh numero
                 boolean ehNumero = dado.matches("[0-9]+");
@@ -123,7 +123,10 @@ public class ServicoPaciente {
             }
             
             // Devem ser STRING
-            if (opcao.equals("CONVENIO")) {
+            if ((opcao.equals("NOME")) ||
+                (opcao.equals("CPF")) ||
+                (opcao.equals("SEXO")) ||
+                (opcao.equals("CONVENIO"))) {
                 
                 return dao.buscarPor(opcao, dado);
             }

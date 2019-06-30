@@ -28,7 +28,7 @@ public class Consulta {
     private String prontuario;
     
     @Temporal(TemporalType.TIME)
-    @Column(name = "con_horario_inicio")
+    @Column(name = "con_horario_inicio", nullable = false)
     private Date horarioInicio;
 
     @Temporal(TemporalType.TIME)
@@ -36,7 +36,7 @@ public class Consulta {
     private Date horarioFim;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "con_data")
+    @Column(name = "con_data", nullable = false)
     private Date data;
     
     @Column(name = "con_valor")

@@ -15,25 +15,25 @@ public class Contato {
     // Constantes contendo o tamanho das colunas no banco de dados
     @Transient
     private final int TAMANHO_EMAIL = 600;
+
+    @Transient
+    private final int TAMANHO_TELEFONE = 14;
     
     @Transient
-    private final int TAMANHO_TELEFONE = 11;
-    
-    @Transient
-    private final int TAMANHO_CELULAR = 11;
+    private final int TAMANHO_CELULAR = 15;
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cot_codigo")
     private Integer codigo;
 
-    @Column(name = "cot_email", nullable = false, length = TAMANHO_EMAIL)
+    @Column(name = "cot_email", length = TAMANHO_EMAIL)
     private String email;
     
-    @Column(name = "cot_telefone", nullable = false, length = TAMANHO_TELEFONE)
+    @Column(name = "cot_telefone", length = TAMANHO_TELEFONE)
     private String telefone;
 
-    @Column(name = "cot_celular", nullable = false, length = TAMANHO_CELULAR)
+    @Column(name = "cot_celular", length = TAMANHO_CELULAR)
     private String celular;
 
     public Contato() {
@@ -106,17 +106,17 @@ public class Contato {
 
     @Override
     public String toString() {
-        
-        if (!Validacao.Vazio(this.celular)) {
+
+        if (!(this.celular.equals("(  )      -    "))) {
             return this.codigo + "-" + this.celular;
+        }
+        
+        if (!(this.telefone.equals("(  )     -    "))) {
+            return this.codigo + "-" + this.telefone;
         }
         
         if (!Validacao.Vazio(this.email)) {
             return this.codigo + "-" + this.email;
-        }
-        
-        if (!Validacao.Vazio(this.telefone)) {
-            return this.codigo + "-" + this.telefone;
         }
         
         return this.codigo.toString();

@@ -1,11 +1,14 @@
 package jeffersonmca.com.github.agendaclinica.servico;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import jeffersonmca.com.github.agendaclinica.modelo.Consulta;
 import jeffersonmca.com.github.agendaclinica.dao.DAOConsulta;
 import jeffersonmca.com.github.agendaclinica.excecoes.ExcecaoDAO;
 import jeffersonmca.com.github.agendaclinica.excecoes.ExcecaoServico;
 import jeffersonmca.com.github.agendaclinica.excecoes.ExcecaoValidacao;
+import jeffersonmca.com.github.agendaclinica.util.Conversoes;
 import jeffersonmca.com.github.agendaclinica.util.Validacao;
 
 public class ServicoConsulta {
@@ -105,15 +108,6 @@ public class ServicoConsulta {
         if (opcao.equals("SEM FILTRO")) {
             return dao.buscarPor(opcao, null);
         }
-
-//ID
-//PRONTUARIO
-//ID MEDICO
-//ID PACIENTE
-//HORARIO INICIO
-//HORARIO FIM
-//DATA
-//VALOR        
         
         // Se a opcao NAO for SEM FILTRO, agora iremos verificar se o campo esta vazio
         if  (!(opcao.equals("SEM FILTRO")) && (!Validacao.Vazio(dado))) {
@@ -145,8 +139,21 @@ public class ServicoConsulta {
             // Devem ser DATA
             if (opcao.equals("DATA")) {
                 
-                if (Validacao.Data(dado))
+                if (Validacao.Data(dado)) {
+                    
+                    // Transforma a data digita em uma data valida para pesquisa no BD
+                    SimpleDateFormat sdfAno = new SimpleDateFormat("yyyy");
+                    String ano = sdfAno.format(Conversoes.strToDate(dado));
+                    SimpleDateFormat sdfMes = new SimpleDateFormat("MM");
+                    String mes = sdfMes.format(Conversoes.strToDate(dado));
+                    SimpleDateFormat sdfDia = new SimpleDateFormat("dd");
+                    String dia = sdfDia.format(Conversoes.strToDate(dado));
+                    
+                    dado = "";
+                    dado = ano + "-" + mes + "-" + dia;
+                    
                     return dao.buscarPor(opcao, dado);
+                }
             }
             
             // Devem ser FLOAT

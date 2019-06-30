@@ -91,7 +91,7 @@ public class PacientePesquisa extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        ComboBoxOpcao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SEM FILTRO", "CODIGO", "NOME", "TIPO AMBIENTE", "CAPACIDADE", "LOCALIZAÇÃO" }));
+        ComboBoxOpcao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SEM FILTRO", "CODIGO", "NOME", "CPF", "IDADE", "SEXO", "ID ENDERECO", "ID CONTATO", "CONVENIO" }));
 
         jLabel1.setText("Pesquisar Por:");
 
@@ -150,8 +150,8 @@ public class PacientePesquisa extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -189,7 +189,7 @@ public class PacientePesquisa extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 136, Short.MAX_VALUE)
                 .addComponent(buttonImprimirRelatorio)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buttonVisualizarRelatorio)

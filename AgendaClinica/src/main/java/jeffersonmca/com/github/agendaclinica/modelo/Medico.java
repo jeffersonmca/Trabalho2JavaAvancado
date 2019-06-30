@@ -45,14 +45,6 @@ public class Medico extends Pessoa {
         this.especializacoes = especializacoes;
     }
 
-    public Integer getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(Integer codigo) {
-        this.codigo = codigo;
-    }
-
     public String getPeriodoTrabalho() {
         return periodoTrabalho;
     }
@@ -96,6 +88,6 @@ public class Medico extends Pessoa {
 
     @Override
     public String toString() {
-        return this.codigo + "-" + this.getNome();
+        return this.getCodigo() + "-" + this.getNome();
     }
 }

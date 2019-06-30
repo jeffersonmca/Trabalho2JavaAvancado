@@ -20,7 +20,7 @@ public class Permissao {
     @Column(name = "per_codigo")
     private Integer codigo;
 
-    @Column(name = "per_descricao", length = TAMANHO_DESCRICAO)
+    @Column(name = "per_descricao", nullable = false, length = TAMANHO_DESCRICAO)
     private String descricao;
     
     public Permissao() {

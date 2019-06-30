@@ -13,20 +13,29 @@ public class Conversoes {
    
     public static Date strToTime(String texto) {
         
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-        
-        try {
-            return sdf.parse(texto);
-        } catch (ParseException ex) {
-            JOptionPane.showMessageDialog(null, "Hora está errada!");
-            return null;
+        if (Validacao.Hora(texto)) {
+            
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+
+            try {
+                return sdf.parse(texto);
+            } catch (ParseException ex) {
+                JOptionPane.showMessageDialog(null, "Hora está errada!");
+                return null;
+            }
         }
+        
+        return null;
     } 
     
     public static String timeToStr(Date hora) {
+
+        if (Validacao.Alocado(hora)) {
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");        
+            return sdf.format(hora);
+        }
         
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");        
-        return sdf.format(hora);
+        return null;
     }
     
     public static Date strToDate(String texto) {

@@ -52,14 +52,12 @@ public class EspecializacaoTableModel  extends AbstractTableModel {
         }       
     }
     
-   public void addRow(Especializacao c){
-       
-       dados.add(c);
+   public void addRow(Especializacao e) {       
+       dados.add(e);
        this.fireTableDataChanged();
    } 
    
-   public void removeRow(int linha){
-       
+   public void removeRow(int linha) {       
        dados.remove(linha);
        this.fireTableDataChanged();
    } 

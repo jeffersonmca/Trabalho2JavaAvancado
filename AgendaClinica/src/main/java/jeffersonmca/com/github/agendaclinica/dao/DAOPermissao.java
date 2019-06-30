@@ -30,4 +30,22 @@ public class DAOPermissao extends DAOGenerico<Permissao, Integer> {
             throw new ExcecaoDAO("Houve erro ao pegar os registros!");
         }
     }
+
+    public List<Permissao> buscarPermissoesForaDaGrid(List<Permissao> permissoes) throws ExcecaoDAO {
+        try {         
+            
+            String sql = "select p from Permissao p "
+                    + " where (1 = 1) ";
+            
+            for (Permissao e : permissoes) {
+                if (e != null) {
+                    sql += " and p.codigo != " + e.getCodigo();
+                }
+            }
+            
+            return em.createQuery(sql).getResultList();
+        } catch (Exception e) {
+            throw new ExcecaoDAO("Houve erro ao pegar as permissões!");
+        }
+    }
 }

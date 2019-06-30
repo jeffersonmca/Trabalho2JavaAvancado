@@ -20,15 +20,14 @@ public class Especializacao {
     private final int TAMANHO_NOME = 50;
     
     @Transient
-    private final int TAMANHO_AREA = 50;
-    
+    private final int TAMANHO_AREA = 50;    
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "esp_codigo")
     private Integer codigo;
 
-    @Column(name = "esp_nome", length = TAMANHO_NOME)
+    @Column(name = "esp_nome", nullable = false, length = TAMANHO_NOME)
     private String nome;
     
     @Column(name = "esp_area", length = TAMANHO_AREA)

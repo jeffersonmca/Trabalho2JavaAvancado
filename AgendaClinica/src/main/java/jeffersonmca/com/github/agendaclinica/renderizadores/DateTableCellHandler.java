@@ -1,14 +1,14 @@
 package jeffersonmca.com.github.agendaclinica.renderizadores;
 
-import jeffersonmca.com.github.agendaclinica.util.Validacao;
 import java.awt.Color;
 import java.awt.Component;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
+import jeffersonmca.com.github.agendaclinica.util.Validacao;
 
-public class DateTableCellHandler extends DefaultTableCellRenderer {
+public class DateTableCellHandler  extends DefaultTableCellRenderer{
 
     public DateTableCellHandler() {
         setHorizontalAlignment(CENTER);
@@ -18,19 +18,19 @@ public class DateTableCellHandler extends DefaultTableCellRenderer {
     protected void setValue(Object value) {
         
         if (Validacao.Alocado(value)) {
-
-            Date hora = (Date) value;
-            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-            super.setValue(sdf.format(hora));
-
+            
+            Date dt = (Date)value;
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            super.setValue(sdf.format(dt)); 
+            
         }else super.setValue(value);
     }
     
     
- @Override
+    @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         
-        super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);        
         setBackground(getColor(row, isSelected));
         
         return this;

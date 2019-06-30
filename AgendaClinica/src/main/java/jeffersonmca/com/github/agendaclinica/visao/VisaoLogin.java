@@ -1,12 +1,20 @@
 package jeffersonmca.com.github.agendaclinica.visao;
 
 import java.awt.Cursor;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import jeffersonmca.com.github.agendaclinica.excecoes.ExcecaoDAO;
 import jeffersonmca.com.github.agendaclinica.excecoes.ExcecaoServico;
-import jeffersonmca.com.github.agendaclinica.modelo.Pessoa;
-import jeffersonmca.com.github.agendaclinica.servico.ServicoContato;
+import jeffersonmca.com.github.agendaclinica.excecoes.ExcecaoValidacao;
+import jeffersonmca.com.github.agendaclinica.modelo.Contato;
+import jeffersonmca.com.github.agendaclinica.modelo.Endereco;
+import jeffersonmca.com.github.agendaclinica.modelo.EnumSexo;
+import jeffersonmca.com.github.agendaclinica.modelo.Permissao;
+import jeffersonmca.com.github.agendaclinica.modelo.Usuario;
+import jeffersonmca.com.github.agendaclinica.servico.ServicoPermissao;
+import jeffersonmca.com.github.agendaclinica.servico.ServicoUsuario;
 import jeffersonmca.com.github.agendaclinica.util.Validacao;
 
 public class VisaoLogin extends javax.swing.JFrame {
@@ -19,14 +27,79 @@ public class VisaoLogin extends javax.swing.JFrame {
             
             this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
         
-            // Iniciando a conexao com o BD
-            ServicoContato servico = new ServicoContato();             
-            try {
-                servico.buscarPorCodigo(1);
-            } catch (Exception e) {}
+            // Criando as permissoes do programa caso ainda nao existam
+            criaPermissoes();
+
+            // Cria usuario adm caso ainda nao exista
+            criaADM();
             
         } finally {
             this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        }
+    }
+    
+    // Cria usuario adm caso ainda nao exista
+    private void criaADM() {
+        
+        ServicoUsuario servico = new ServicoUsuario();
+        List<Usuario> usuarios = null;
+        try {
+            usuarios = servico.buscarPor("AUTENTICADOR", "ADM");
+
+            if (Validacao.Vazio(usuarios)) {
+                Usuario u = new Usuario();
+                u.setNome("Administrador");
+                u.setIdade(30);
+                Contato c = new Contato();
+                c.setCelular("(37) 99545-5369");
+                u.setContato(c);
+                u.setAutenticador("ADM");
+                u.setSenha("ADM");
+                u.setSexo(EnumSexo.MASCULINO);
+                Endereco e = new Endereco();
+                e.setBairro("Juca Dias");
+                e.setCep("213589");
+                e.setCidade("São Paulo/SP");
+                e.setNumero(15);
+                e.setRua("Antonieta de Vilela");
+                u.setEndereco(e);
+                u.setCpf("456.294.736-54");
+                
+                ServicoPermissao serP = new ServicoPermissao();
+                List<Permissao> permissoes = serP.buscarPor("DESCRICAO", "ADM");
+                u.setPermissoes(permissoes);
+                servico.salvar(u);
+            }
+        } catch (ExcecaoDAO|ExcecaoValidacao|ExcecaoServico ex) {}
+    }
+    
+    // Criando as permissoes do programa caso ainda nao existam
+    private void criaPermissoes() {
+          
+        ServicoPermissao servico = new ServicoPermissao();
+        
+        List<String> descricaoTelas = new ArrayList<>();
+        descricaoTelas.add("Consulta");
+        descricaoTelas.add("Contato");
+        descricaoTelas.add("Endereco");
+        descricaoTelas.add("Especialização");
+        descricaoTelas.add("Médico");
+        descricaoTelas.add("Secretário");
+        descricaoTelas.add("Usuário");
+        descricaoTelas.add("ADM");
+        List<Permissao> permissoes = null;
+        
+        for (String d : descricaoTelas) {
+                    
+            try {
+                permissoes = servico.buscarPor("DESCRICAO", d);
+                if (Validacao.Vazio(permissoes)) {
+                    Permissao p = new Permissao();
+                    p.setDescricao(d);
+                    servico.salvar(p);
+                }
+                permissoes = null;
+            } catch (ExcecaoDAO|ExcecaoValidacao|ExcecaoServico ex) {}
         }
     }
 
@@ -42,7 +115,6 @@ public class VisaoLogin extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         labelRecebimento = new javax.swing.JLabel();
         panelBotoes = new javax.swing.JPanel();
-        buttonCriar = new javax.swing.JButton();
         buttonEntrar = new javax.swing.JButton();
         buttonSair = new javax.swing.JButton();
 
@@ -78,24 +150,6 @@ public class VisaoLogin extends javax.swing.JFrame {
 
         panelBotoes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         panelBotoes.setLayout(null);
-
-        buttonCriar.setFont(new java.awt.Font("Noto Sans", 0, 18)); // NOI18N
-        buttonCriar.setText("Criar");
-        buttonCriar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                buttonCriarMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                buttonCriarMouseExited(evt);
-            }
-        });
-        buttonCriar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonCriarActionPerformed(evt);
-            }
-        });
-        panelBotoes.add(buttonCriar);
-        buttonCriar.setBounds(10, 10, 70, 40);
 
         buttonEntrar.setFont(new java.awt.Font("Noto Sans", 0, 18)); // NOI18N
         buttonEntrar.setText("Entrar");
@@ -163,27 +217,66 @@ public class VisaoLogin extends javax.swing.JFrame {
         this.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }//GEN-LAST:event_buttonEntrarMouseEntered
 
-    private void buttonCriarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonCriarMouseEntered
-        this.setCursor(new Cursor(Cursor.HAND_CURSOR));
-    }//GEN-LAST:event_buttonCriarMouseEntered
-
-    private void buttonCriarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonCriarMouseExited
-        this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-    }//GEN-LAST:event_buttonCriarMouseExited
-
-    private void buttonCriarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCriarActionPerformed
-
-    }//GEN-LAST:event_buttonCriarActionPerformed
-
     private void buttonEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEntrarActionPerformed
 
-        // Fecha a tela de login
-        this.setVisible(false);
-        this.dispose();                
+        try {
+            
+            this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+        
+            // Pega o usuario e senha digitados
+            String usuario = textUsuario.getText();
+            String senha = String.valueOf(passwordSenha.getPassword());
 
-        // Abre a tela principal do programa
-        Principal telaPrincipal = new Principal();
-        telaPrincipal.setVisible(true);
+            if (Validacao.Vazio(usuario)) {
+
+                JOptionPane.showMessageDialog(this,
+                    "Informe o usuário",
+                    "Dica",
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            if (Validacao.Vazio(senha)) {
+
+                JOptionPane.showMessageDialog(this,
+                    "Informe a senha",
+                    "Dica",
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            ServicoUsuario servico = new ServicoUsuario();
+            Usuario u = null;
+            try {
+                u = servico.buscarPorAutenticador(textUsuario.getText());
+            } catch (ExcecaoDAO|ExcecaoServico ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // NAO achou um usuario com este login
+            if (!Validacao.Alocado(u)) {
+                JOptionPane.showMessageDialog(this, "Usuário não encontrado!", "Aviso", JOptionPane.WARNING_MESSAGE);
+                return ;
+            }
+
+            // Verifica se a senha esta correta
+            if (servico.logar(u, senha)) {
+
+                // Fecha a tela de login
+                this.setVisible(false);
+                this.dispose();                
+
+                // Abre a tela principal do programa
+                Principal telaPrincipal = new Principal(u);
+                telaPrincipal.setVisible(true);
+            }else {
+                JOptionPane.showMessageDialog(this, "Senha esta errada!", "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
+        
+        } finally {
+            this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        }
     }//GEN-LAST:event_buttonEntrarActionPerformed
 
     private void buttonSairMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonSairMouseEntered
@@ -220,7 +313,6 @@ public class VisaoLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton buttonCriar;
     private javax.swing.JButton buttonEntrar;
     private javax.swing.JButton buttonSair;
     private javax.swing.JPanel jPanel1;

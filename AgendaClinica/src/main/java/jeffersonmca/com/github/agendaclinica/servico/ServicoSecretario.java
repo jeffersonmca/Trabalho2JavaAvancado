@@ -105,15 +105,15 @@ public class ServicoSecretario {
         if (opcao.equals("SEM FILTRO")) {
             return dao.buscarPor(opcao, null);
         }
-
-//CODIGO
-//PERIODO TRABALHO
         
         // Se a opcao NAO for SEM FILTRO, agora iremos verificar se o campo esta vazio
         if  (!(opcao.equals("SEM FILTRO")) && (!Validacao.Vazio(dado))) {
             
             // Devem ser INTEGER
-            if (opcao.equals("CODIGO")) {
+            if ((opcao.equals("CODIGO")) ||
+                (opcao.equals("IDADE")) ||
+                (opcao.equals("ID ENDERECO")) ||
+                (opcao.equals("ID CONTATO"))) {
                 
                 // Verifica se string eh numero
                 boolean ehNumero = dado.matches("[0-9]+");
@@ -123,7 +123,10 @@ public class ServicoSecretario {
             }
             
             // Devem ser STRING
-            if (opcao.equals("PERIODO TRABALHO")) {
+            if ((opcao.equals("NOME")) ||
+                (opcao.equals("CPF")) ||
+                (opcao.equals("SEXO")) ||
+                (opcao.equals("PERIODO TRABALHO"))) {
                 
                 return dao.buscarPor(opcao, dado);
             }

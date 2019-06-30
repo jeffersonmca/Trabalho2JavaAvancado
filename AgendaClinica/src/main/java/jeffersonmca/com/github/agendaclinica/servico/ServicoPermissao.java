@@ -131,4 +131,8 @@ public class ServicoPermissao {
         
         return null;
     }
+    
+    public List<Permissao> buscarPermissoesForaDaGrid(List<Permissao> permissoes) throws ExcecaoDAO {
+        return dao.buscarPermissoesForaDaGrid(permissoes);
+    }
 }

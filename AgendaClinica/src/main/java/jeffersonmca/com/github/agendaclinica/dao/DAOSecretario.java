@@ -12,13 +12,23 @@ public class DAOSecretario extends DAOGenerico<Secretario, Integer> {
             
             String sql = "select s from Secretario s "
                     + " where (1 = 1) ";
-//CODIGO
-//PERIODO TRABALHO
 
             if (!(opcao.equals("SEM FILTRO"))) {
                
                 if (opcao.equals("CODIGO")) {
                     sql += " and s.codigo = " + dado;
+                }else if (opcao.equals("NOME")) {
+                    sql += " and s.nome like '%" + dado + "%'";
+                }else if (opcao.equals("CPF")) {
+                    sql += " and s.cpf like '%" + dado + "%'";
+                }else if (opcao.equals("IDADE")) {
+                    sql += " and s.idade = " + dado;
+                }else if (opcao.equals("SEXO")) {
+                    sql += " and s.sexo like '%" + dado + "%'";
+                }else if (opcao.equals("ID ENDERECO")) {
+                    sql += " and s.endereco.codigo = " + dado;
+                }else if (opcao.equals("ID CONTATO")) {
+                    sql += " and s.contato.codigo = " + dado;
                 }else if (opcao.equals("PERIODO TRABALHO")) {
                     sql += " and s.periodoTrabalho like '%" + dado + "%'";
                 }

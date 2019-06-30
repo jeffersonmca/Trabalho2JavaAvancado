@@ -54,14 +54,12 @@ public class ContatoTableModel  extends AbstractTableModel {
         }       
     }
     
-   public void addRow(Contato c){
-       
+   public void addRow(Contato c) {       
        dados.add(c);
        this.fireTableDataChanged();
    } 
    
-   public void removeRow(int linha){
-       
+   public void removeRow(int linha) {       
        dados.remove(linha);
        this.fireTableDataChanged();
    } 

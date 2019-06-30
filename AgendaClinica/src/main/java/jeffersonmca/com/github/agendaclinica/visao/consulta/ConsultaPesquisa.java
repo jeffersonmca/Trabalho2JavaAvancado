@@ -7,7 +7,10 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import jeffersonmca.com.github.agendaclinica.excecoes.ExcecaoDAO;
 import jeffersonmca.com.github.agendaclinica.modelo.Consulta;
+import jeffersonmca.com.github.agendaclinica.renderizadores.CurrencyTableCellHandler;
+import jeffersonmca.com.github.agendaclinica.renderizadores.DateTableCellHandler;
 import jeffersonmca.com.github.agendaclinica.renderizadores.StrippedTableCellHandler;
+import jeffersonmca.com.github.agendaclinica.renderizadores.TimeTableCellHandler;
 import jeffersonmca.com.github.agendaclinica.servico.ServicoConsulta;
 import jeffersonmca.com.github.agendaclinica.util.GerenciaRelatorio;
 
@@ -49,6 +52,16 @@ public class ConsultaPesquisa extends javax.swing.JFrame {
             tabModel = new ConsultaTableModel(dados);
             tableConsultas.setModel(tabModel);
             
+            // Modificando os campos de hora
+            tableConsultas.getColumnModel().getColumn(2).setCellRenderer(new TimeTableCellHandler());
+            tableConsultas.getColumnModel().getColumn(3).setCellRenderer(new TimeTableCellHandler());
+            
+            // Modificando os campos de data
+            tableConsultas.getColumnModel().getColumn(4).setCellRenderer(new DateTableCellHandler());
+            
+            // Modificando os campos de hora
+            tableConsultas.getColumnModel().getColumn(7).setCellRenderer(new CurrencyTableCellHandler());
+            
             // Melhorando o aspecto da grid
             tableConsultas.setDefaultRenderer(Object.class, new StrippedTableCellHandler());
         
@@ -87,7 +100,7 @@ public class ConsultaPesquisa extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        ComboBoxOpcao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SEM FILTRO", "CODIGO", "NOME", "TIPO AMBIENTE", "CAPACIDADE", "LOCALIZAÇÃO" }));
+        ComboBoxOpcao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SEM FILTRO", "CODIGO", "PRONTUARIO", "HORARIO INICIO", "HORARIO FIM", "DATA", "ID MEDICO", "ID PACIENTE", "VALOR" }));
 
         jLabel1.setText("Pesquisar Por:");
 
@@ -146,8 +159,8 @@ public class ConsultaPesquisa extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,7 +198,7 @@ public class ConsultaPesquisa extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 136, Short.MAX_VALUE)
                 .addComponent(buttonImprimirRelatorio)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buttonVisualizarRelatorio)

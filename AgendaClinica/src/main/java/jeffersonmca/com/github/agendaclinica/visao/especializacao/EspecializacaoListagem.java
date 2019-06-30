@@ -7,6 +7,7 @@ import java.awt.Cursor;
 import java.util.List;
 import javax.swing.JOptionPane;
 import jeffersonmca.com.github.agendaclinica.modelo.Especializacao;
+import jeffersonmca.com.github.agendaclinica.renderizadores.StrippedTableCellHandler;
 import jeffersonmca.com.github.agendaclinica.servico.ServicoEspecializacao;
 
 public class EspecializacaoListagem extends javax.swing.JFrame {
@@ -39,7 +40,10 @@ public class EspecializacaoListagem extends javax.swing.JFrame {
             }
 
             tabModel = new EspecializacaoTableModel(dados);
-            jTable1.setModel(tabModel);
+            tableEspecializacoes.setModel(tabModel);
+            
+            // Melhorando o aspecto da grid
+            tableEspecializacoes.setDefaultRenderer(Object.class, new StrippedTableCellHandler());
         
         } finally {
             this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -57,21 +61,60 @@ public class EspecializacaoListagem extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tableEspecializacoes = new javax.swing.JTable();
         jToolBar1 = new javax.swing.JToolBar();
         jbtnIncluir = new javax.swing.JButton();
+        jSeparator4 = new javax.swing.JToolBar.Separator();
         jbtnEditar = new javax.swing.JButton();
+        jSeparator3 = new javax.swing.JToolBar.Separator();
         jbtnRemover = new javax.swing.JButton();
+        jSeparator2 = new javax.swing.JToolBar.Separator();
         jbtnAtualizar = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
         jbtnFechar = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Listagem de clientes");
+        setTitle("Listagem de Especialização");
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        tableEspecializacoes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tableEspecializacoes);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jToolBar1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jToolBar1.setRollover(true);
+        jToolBar1.setPreferredSize(new java.awt.Dimension(286, 69));
 
+        jbtnIncluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/images/incluir.png"))); // NOI18N
         jbtnIncluir.setText("Incluir");
         jbtnIncluir.setToolTipText("Adcionar");
         jbtnIncluir.setFocusable(false);
@@ -84,6 +127,10 @@ public class EspecializacaoListagem extends javax.swing.JFrame {
         });
         jToolBar1.add(jbtnIncluir);
 
+        jSeparator4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jToolBar1.add(jSeparator4);
+
+        jbtnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/images/editar.png"))); // NOI18N
         jbtnEditar.setText("Editar");
         jbtnEditar.setToolTipText("Editar");
         jbtnEditar.setFocusable(false);
@@ -96,6 +143,10 @@ public class EspecializacaoListagem extends javax.swing.JFrame {
         });
         jToolBar1.add(jbtnEditar);
 
+        jSeparator3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jToolBar1.add(jSeparator3);
+
+        jbtnRemover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/images/remover.png"))); // NOI18N
         jbtnRemover.setText("Remover");
         jbtnRemover.setToolTipText("Remover");
         jbtnRemover.setFocusable(false);
@@ -108,6 +159,10 @@ public class EspecializacaoListagem extends javax.swing.JFrame {
         });
         jToolBar1.add(jbtnRemover);
 
+        jSeparator2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jToolBar1.add(jSeparator2);
+
+        jbtnAtualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/images/atualizar.png"))); // NOI18N
         jbtnAtualizar.setText("Atualizar");
         jbtnAtualizar.setToolTipText("Atualizar");
         jbtnAtualizar.setFocusable(false);
@@ -119,8 +174,11 @@ public class EspecializacaoListagem extends javax.swing.JFrame {
             }
         });
         jToolBar1.add(jbtnAtualizar);
+
+        jSeparator1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jToolBar1.add(jSeparator1);
 
+        jbtnFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/images/cancelar.png"))); // NOI18N
         jbtnFechar.setText("Fechar");
         jbtnFechar.setToolTipText("Fechar");
         jbtnFechar.setFocusable(false);
@@ -133,121 +191,120 @@ public class EspecializacaoListagem extends javax.swing.JFrame {
         });
         jToolBar1.add(jbtnFechar);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(13, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 32, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(418, 378));
+        setSize(new java.awt.Dimension(564, 495));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jbtnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnFecharActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_jbtnFecharActionPerformed
-
-    private void jbtnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAtualizarActionPerformed
-        atualizaDados();
-    }//GEN-LAST:event_jbtnAtualizarActionPerformed
-
-    private void jbtnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnRemoverActionPerformed
-        
-        if (jTable1.getSelectedRow() == -1){
-            JOptionPane.showMessageDialog(this, "Selecione um registro.", "Dica", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-        
-        Especializacao aux = dados.get(jTable1.getSelectedRow());        
-        
-        if (aux == null){            
-          JOptionPane.showMessageDialog(this, "Registro não encontrado.");  
-          return;   
-        } 
-        
-        if (JOptionPane.showConfirmDialog(this, 
-                "Confirma a remoção do especializacao?",
-                "Remoção",                
-                  JOptionPane.YES_NO_OPTION
-                      )
-               == JOptionPane.YES_OPTION )
-              {
-
-            try {              
-                service.remover(aux.getCodigo());
-                atualizaDados();
-                JOptionPane.showMessageDialog(this, "Registro removido com sucesso.");
-                return;
-                
-            } catch (ExcecaoDAO|ExcecaoServico e) {
-                JOptionPane.showMessageDialog(this, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-            }              
-        }
-    }//GEN-LAST:event_jbtnRemoverActionPerformed
-
     private void jbtnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnIncluirActionPerformed
-        
+
+        // Instancia a tela de inclusao do Especializacao
         EspecializacaoInclui tela = new EspecializacaoInclui(this, true, service);
         tela.setVisible(true);
+
+        // Apos a inclusao, atualiza a grid
         atualizaDados();
     }//GEN-LAST:event_jbtnIncluirActionPerformed
 
     private void jbtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnEditarActionPerformed
 
-        if (jTable1.getSelectedRow() == -1){
+        // Verifica se o usuario selecionou alguma linha da grid para a edicao
+        if (tableEspecializacoes.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(this, "Selecione um registro.", "Dica", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
-        
-        Especializacao aux = dados.get(jTable1.getSelectedRow());        
-        
-        if (aux == null){            
-          JOptionPane.showMessageDialog(this, "Registro não encontrado.");  
-          return;   
-        } 
 
+        // Pega a linha que ele selecionou e transforma em um objeto do tipo Especializacao
+        Especializacao aux = dados.get(tableEspecializacoes.getSelectedRow());
+
+        // Precaucao caso algo de errado
+        if (aux == null) {
+            JOptionPane.showMessageDialog(this, "Registro não encontrado!");
+            return;
+        }
+
+        // Instancia a tela de edicao do Especializacao. passando de parametro
+        // o servico e o Especializacao a ser editado
         EspecializacaoEdita tela = new EspecializacaoEdita(this, true, service, aux);
-        
         tela.setVisible(true);
+
+        // Apos a edicao, atualiza a grid
         atualizaDados();
     }//GEN-LAST:event_jbtnEditarActionPerformed
 
+    private void jbtnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnRemoverActionPerformed
+
+        // Verifica se o usuario selecionou alguma linha da grid para a remocao
+        if (tableEspecializacoes.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione um registro.", "Dica", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        // Pega a linha que ele selecionou e transforma em um objeto do tipo Especializacao
+        Especializacao aux = dados.get(tableEspecializacoes.getSelectedRow());
+
+        // Precaucao caso algo de errado
+        if (aux == null) {
+            JOptionPane.showMessageDialog(this, "Registro não encontrado!");
+            return;
+        }
+
+        // Pergunta o usuario se ele realmente quer deletar aquele Especializacao
+        if (JOptionPane.showConfirmDialog(this,
+            "Confirma a remoção da especialização: " + aux.getNome() + "?",
+            "Remoção",
+            JOptionPane.YES_NO_OPTION
+        ) == JOptionPane.YES_OPTION ) {
+
+            try {
+                // Caso a escolha fora sim entao o Especializacao sera removido
+                service.remover(aux.getCodigo());
+                // Atualiza a grid
+                atualizaDados();
+                JOptionPane.showMessageDialog(this, "Registro removido com sucesso.");
+            } catch (ExcecaoDAO|ExcecaoServico e) {
+                JOptionPane.showMessageDialog(this, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_jbtnRemoverActionPerformed
+
+    private void jbtnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAtualizarActionPerformed
+        // Atualiza os dados da grid
+        atualizaDados();
+    }//GEN-LAST:event_jbtnAtualizarActionPerformed
+
+    private void jbtnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnFecharActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jbtnFecharActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar.Separator jSeparator1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JToolBar.Separator jSeparator2;
+    private javax.swing.JToolBar.Separator jSeparator3;
+    private javax.swing.JToolBar.Separator jSeparator4;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JButton jbtnAtualizar;
     private javax.swing.JButton jbtnEditar;
     private javax.swing.JButton jbtnFechar;
     private javax.swing.JButton jbtnIncluir;
     private javax.swing.JButton jbtnRemover;
+    private javax.swing.JTable tableEspecializacoes;
     // End of variables declaration//GEN-END:variables
 }

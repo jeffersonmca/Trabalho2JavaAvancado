@@ -12,13 +12,7 @@ public class DAOEndereco extends DAOGenerico<Endereco, Integer> {
             
             String sql = "select e from Endereco e "
                     + " where (1 = 1) ";
-//CODIGO
-//RUA
-//BAIRRO
-//CIDADE
-//NUMERO
-//CEP
-//COMPLEMENTO
+
             if (!(opcao.equals("SEM FILTRO"))) {
                
                 if (opcao.equals("CODIGO")) {
@@ -29,6 +23,8 @@ public class DAOEndereco extends DAOGenerico<Endereco, Integer> {
                     sql += " and e.bairro like '%" + dado + "%'";
                 }else if (opcao.equals("CIDADE")) {
                     sql += " and e.cidade like '%" + dado + "%'";
+                }else if (opcao.equals("NUMERO")) {
+                    sql += " and e.numero = " + dado;
                 }else if (opcao.equals("CEP")) {
                     sql += " and e.cep like '%" + dado + "%'";
                 }else if (opcao.equals("COMPLEMENTO")) {

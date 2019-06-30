@@ -12,30 +12,23 @@ public class DAOConsulta extends DAOGenerico<Consulta, Integer> {
             
             String sql = "select c from Consulta c "
                     + " where (1 = 1) ";
-//CODIGO
-//PRONTUARIO
-//ID MEDICO
-//ID PACIENTE
-//HORARIO INICIO
-//HORARIO FIM
-//DATA
-//VALOR
+            
             if (!(opcao.equals("SEM FILTRO"))) {
                
                 if (opcao.equals("CODIGO")) {
                     sql += " and c.codigo = " + dado;
                 }else if (opcao.equals("PRONTUARIO")) {
                     sql += " and c.prontuario like '%" + dado + "%'";
-                }else if (opcao.equals("ID MEDICO")) {
-                    sql += " and c.medico.codigo = " + dado;
-                }else if (opcao.equals("ID PACIENTE")) {
-                    sql += " and c.paciente.codigo = " + dado;
                 }else if (opcao.equals("HORARIO INICIO")) {
                     sql += " and c.horarioInicio like '%" + dado + "%'";
                 }else if (opcao.equals("HORARIO FIM")) {
                     sql += " and c.horarioFim like '%" + dado + "%'";
                 }else if (opcao.equals("DATA")) {
                     sql += " and c.data like '%" + dado + "%'";
+                }else if (opcao.equals("ID MEDICO")) {
+                    sql += " and c.medico.codigo = " + dado;
+                }else if (opcao.equals("ID PACIENTE")) {
+                    sql += " and c.paciente.codigo = " + dado;
                 }else if (opcao.equals("VALOR")) {
                     sql += " and c.valor = " + dado;
                 }

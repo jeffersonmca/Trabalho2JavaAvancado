@@ -20,7 +20,12 @@ public class ServicoContato {
         
     	try {
             /*Regra de negocio*/
-            dao.salvar(instancia); 
+            if (Validacao.ContatoEdita(instancia)) {
+                dao.salvar(instancia);
+            }else{
+                throw new ExcecaoValidacao("Houve erro ao validar o Contato!");
+            }
+            
     	} catch (ExcecaoDAO e) {
             throw e;
         } catch (Exception e) {
@@ -33,7 +38,12 @@ public class ServicoContato {
     	try {
     		
             /*Regra de negocio*/
-               dao.salvar(instancia);       
+            if (Validacao.Contato(instancia)) {
+                dao.salvar(instancia);
+            }else{
+                throw new ExcecaoValidacao("Houve erro ao validar o Contato!");
+            }
+            
     	} catch (ExcecaoDAO e) {
             throw e;
         } catch (Exception e) {
@@ -94,11 +104,6 @@ public class ServicoContato {
         if (opcao.equals("SEM FILTRO")) {
             return dao.buscarPor(opcao, null);
         }
-
-//CODIGO
-//E-MAIL
-//TELEFONE
-//CELULAR
         
         // Se a opcao NAO for SEM FILTRO, agora iremos verificar se o campo esta vazio
         if  (!(opcao.equals("SEM FILTRO")) && (!Validacao.Vazio(dado))) {

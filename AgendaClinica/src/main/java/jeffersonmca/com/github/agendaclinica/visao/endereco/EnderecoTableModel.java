@@ -60,14 +60,12 @@ public class EnderecoTableModel  extends AbstractTableModel {
         }       
     }
     
-   public void addRow(Endereco c){
-       
-       dados.add(c);
+   public void addRow(Endereco e) {       
+       dados.add(e);
        this.fireTableDataChanged();
    } 
    
-   public void removeRow(int linha){
-       
+   public void removeRow(int linha) {       
        dados.remove(linha);
        this.fireTableDataChanged();
    } 

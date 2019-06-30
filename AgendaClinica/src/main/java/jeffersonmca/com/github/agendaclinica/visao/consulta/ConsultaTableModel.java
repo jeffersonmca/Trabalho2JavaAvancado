@@ -10,7 +10,7 @@ import jeffersonmca.com.github.agendaclinica.modelo.Paciente;
 public class ConsultaTableModel  extends AbstractTableModel {
 
     private List<Consulta> dados;
-    private String[] colunas = {"Código", "Prontuário", "Início", "Fim", "Data", "ID Medico", "ID Paciente"};
+    private String[] colunas = {"Código", "Prontuário", "Início", "Fim", "Data", "ID Medico", "ID Paciente", "Valor"};
 
     public ConsultaTableModel(List<Consulta> dados) {
         this.dados = dados;
@@ -39,6 +39,7 @@ public class ConsultaTableModel  extends AbstractTableModel {
               case 4 : return a.getData();
               case 5 : return a.getMedico();
               case 6 : return a.getPaciente();
+              case 7 : return a.getValor();
               default: return null;
           }
           
@@ -57,20 +58,19 @@ public class ConsultaTableModel  extends AbstractTableModel {
                 case 4 : dados.get(colIndex).setData((Date)value);
                 case 5 : dados.get(colIndex).setMedico((Medico)value);
                 case 6 : dados.get(colIndex).setPaciente((Paciente)value);
+                case 7 : dados.get(colIndex).setValor((Float)value);
             }
            
             this.fireTableCellUpdated(rowIndex, colIndex);
         }       
     }
     
-   public void addRow(Consulta c){
-       
+   public void addRow(Consulta c) {       
        dados.add(c);
        this.fireTableDataChanged();
    } 
    
-   public void removeRow(int linha){
-       
+   public void removeRow(int linha) {       
        dados.remove(linha);
        this.fireTableDataChanged();
    } 

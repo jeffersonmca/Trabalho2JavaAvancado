@@ -12,10 +12,7 @@ public class DAOContato extends DAOGenerico<Contato, Integer> {
             
             String sql = "select c from Contato c "
                     + " where (1 = 1) ";
-//CODIGO
-//E-MAIL
-//TELEFONE
-//CELULAR
+
             if (!(opcao.equals("SEM FILTRO"))) {
                
                 if (opcao.equals("CODIGO")) {

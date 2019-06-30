@@ -24,7 +24,7 @@ public class ServicoEspecializacao {
         } catch (ExcecaoDAO e) {
             throw e;
         } catch (Exception e) {
-            throw new ExcecaoServico("Houve erro ao requisitar o salvamento do ambiente!");
+            throw new ExcecaoServico("Houve erro ao requisitar o salvamento da Especialização!");
         }
     }
     
@@ -37,7 +37,7 @@ public class ServicoEspecializacao {
         } catch (ExcecaoDAO e) {
             throw e;
         } catch (Exception e) {
-            throw new ExcecaoServico("Houve erro ao requisitar o salvamento do ambiente!");
+            throw new ExcecaoServico("Houve erro ao requisitar o salvamento da Especialização!");
         }
     }
 
@@ -59,7 +59,7 @@ public class ServicoEspecializacao {
         }catch(ExcecaoDAO e) {
             throw e;
         }catch(Exception e){
-            throw new ExcecaoServico("Houve erro ao requisitar a busca de um ambiente!");
+            throw new ExcecaoServico("Houve erro ao requisitar a busca de uma Especialização!");
         }
     }
     
@@ -84,7 +84,7 @@ public class ServicoEspecializacao {
         }catch(ExcecaoDAO e) {
             throw e;
         }catch(Exception e) {
-            throw new ExcecaoServico("Houve erro ao requisitar a remoção de um ambiente!");
+            throw new ExcecaoServico("Houve erro ao requisitar a remoção de uma Especialização!");
         }
     }
     
@@ -94,10 +94,6 @@ public class ServicoEspecializacao {
         if (opcao.equals("SEM FILTRO")) {
             return dao.buscarPor(opcao, null);
         }
-
-//CODIGO
-//NOME
-//AREA
         
         // Se a opcao NAO for SEM FILTRO, agora iremos verificar se o campo esta vazio
         if  (!(opcao.equals("SEM FILTRO")) && (!Validacao.Vazio(dado))) {
@@ -121,5 +117,9 @@ public class ServicoEspecializacao {
         }
         
         return null;
+    }
+
+    public List<Especializacao> buscarEspecializacoesForaDaGrid(List<Especializacao> especializacoes) throws ExcecaoDAO {
+        return dao.buscarEspecializacoesForaDaGrid(especializacoes);
     }
 }
