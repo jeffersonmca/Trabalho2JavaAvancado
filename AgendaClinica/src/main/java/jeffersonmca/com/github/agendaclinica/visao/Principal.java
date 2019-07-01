@@ -125,16 +125,6 @@ public class Principal extends javax.swing.JFrame {
         pesMenuPaciente = new javax.swing.JMenuItem();
         pesMenuSecretario = new javax.swing.JMenuItem();
         pesMenuUsuario = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        relMenuConsulta = new javax.swing.JMenuItem();
-        relMenuContato = new javax.swing.JMenuItem();
-        relMenuEndereco = new javax.swing.JMenuItem();
-        relMenuEspecializacao = new javax.swing.JMenuItem();
-        relMenuMedico = new javax.swing.JMenuItem();
-        relMenuPaciente = new javax.swing.JMenuItem();
-        relMenuPermissao = new javax.swing.JMenuItem();
-        relMenuSecretario = new javax.swing.JMenuItem();
-        relMenuUsuario = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         conMenuLogout = new javax.swing.JMenuItem();
 
@@ -324,42 +314,6 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu3);
 
-        jMenu2.setText("Relatório");
-
-        relMenuConsulta.setText("Consulta");
-        relMenuConsulta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                relMenuConsultaActionPerformed(evt);
-            }
-        });
-        jMenu2.add(relMenuConsulta);
-
-        relMenuContato.setText("Contato");
-        jMenu2.add(relMenuContato);
-
-        relMenuEndereco.setText("Endereço");
-        jMenu2.add(relMenuEndereco);
-
-        relMenuEspecializacao.setText("Especialização");
-        jMenu2.add(relMenuEspecializacao);
-
-        relMenuMedico.setText("Médico");
-        jMenu2.add(relMenuMedico);
-
-        relMenuPaciente.setText("Paciente");
-        jMenu2.add(relMenuPaciente);
-
-        relMenuPermissao.setText("Permissão");
-        jMenu2.add(relMenuPermissao);
-
-        relMenuSecretario.setText("Secretário");
-        jMenu2.add(relMenuSecretario);
-
-        relMenuUsuario.setText("Usuário");
-        jMenu2.add(relMenuUsuario);
-
-        jMenuBar1.add(jMenu2);
-
         jMenu4.setText("Configurações");
 
         conMenuLogout.setText("Logout");
@@ -444,10 +398,6 @@ public class Principal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Você não tem permissão para acessar essa tela!", "Dica", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_cadMenuUsuarioActionPerformed
-
-    private void relMenuConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_relMenuConsultaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_relMenuConsultaActionPerformed
 
     private void pesMenuConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesMenuConsultaActionPerformed
         if (acessoTelaConsulta || acessoADM) {
@@ -562,7 +512,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
@@ -578,14 +527,5 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem pesMenuPaciente;
     private javax.swing.JMenuItem pesMenuSecretario;
     private javax.swing.JMenuItem pesMenuUsuario;
-    private javax.swing.JMenuItem relMenuConsulta;
-    private javax.swing.JMenuItem relMenuContato;
-    private javax.swing.JMenuItem relMenuEndereco;
-    private javax.swing.JMenuItem relMenuEspecializacao;
-    private javax.swing.JMenuItem relMenuMedico;
-    private javax.swing.JMenuItem relMenuPaciente;
-    private javax.swing.JMenuItem relMenuPermissao;
-    private javax.swing.JMenuItem relMenuSecretario;
-    private javax.swing.JMenuItem relMenuUsuario;
     // End of variables declaration//GEN-END:variables
 }

@@ -236,31 +236,13 @@ public class ContatoPesquisa extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonSairActionPerformed
 
     private void buttonVisualizarRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonVisualizarRelatorioActionPerformed
-        
-        try {
-            
-            GerenciaRelatorio g = new GerenciaRelatorio();
-            g.configuraRelatorio(true, "Contatos");
-            
-        } catch (SQLException|FileNotFoundException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-        }
+        // Abre o relatorio na tela ou gera o pdf do mesmo
+//        Relatorio(true);
     }//GEN-LAST:event_buttonVisualizarRelatorioActionPerformed
 
     private void buttonImprimirRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonImprimirRelatorioActionPerformed
-        
-        try {
-            
-            GerenciaRelatorio g = new GerenciaRelatorio();
-            g.configuraRelatorio(false, "Contatos");
-            
-        } catch (SQLException|FileNotFoundException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-        }
+        // Abre o relatorio na tela ou gera o pdf do mesmo
+//        Relatorio(false);
     }//GEN-LAST:event_buttonImprimirRelatorioActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

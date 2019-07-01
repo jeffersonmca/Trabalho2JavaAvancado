@@ -3,6 +3,7 @@ package jeffersonmca.com.github.agendaclinica.visao.endereco;
 import java.awt.Cursor;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import javax.swing.JOptionPane;
 import jeffersonmca.com.github.agendaclinica.excecoes.ExcecaoDAO;
@@ -56,13 +57,118 @@ public class EnderecoPesquisa extends javax.swing.JFrame {
             this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         }
         
-        valoresPadrao();
+//        valoresPadrao();
     }
     
     // Sempre que atualizar a grid ira selecionar a opcao "SEM FILTRO" e limpar o campo text
     private void valoresPadrao() {
         ComboBoxOpcao.setSelectedIndex(0);
         textDado.setText("");
+    }
+    
+    // Abre o relatorio na tela ou gera o pdf do mesmo
+    private void Relatorio(boolean visualizar) {
+        
+        try {
+            
+            GerenciaRelatorio g = new GerenciaRelatorio();
+            
+            // Qual campo do BD vai ser pesquisado
+            String pAtributo = null;
+            
+            // Dado que foi pesquisado que esta no text
+            String pDado = textDado.getText();
+            
+            // Hash contendo o campo pesquisado pelo valor pesquisado 
+            HashMap<String, Object> parametros = new HashMap<String, Object>();
+            
+            // Selecionou qual campo do BD?
+            switch (ComboBoxOpcao.getSelectedItem().toString()) {
+              
+                // Busca todos os dados
+                case "SEM FILTRO":
+                    pAtributo = "1";
+                    pDado = "1";
+                    parametros.put("pAtributo", pAtributo);
+                    parametros.put("pDado", pDado);
+                    g.configuraRelatorio(visualizar, "Enderecos", parametros);
+                    break;
+                case "CODIGO":
+                    pAtributo = "end_codigo";
+                    parametros.put("pAtributo", pAtributo);
+                    parametros.put("pDado", pDado);
+                    g.configuraRelatorio(visualizar, "Enderecos", parametros);
+                    break;
+                case "RUA":
+                    pAtributo = "end_rua";
+                    parametros.put("pAtributo", pAtributo);
+                    parametros.put("pDado", pDado);
+                    g.configuraRelatorio(visualizar, "EnderecosLike", parametros);
+                    break;
+                case "BAIRRO":
+                    pAtributo = "end_bairro";
+                    parametros.put("pAtributo", pAtributo);
+                    parametros.put("pDado", pDado);
+                    g.configuraRelatorio(visualizar, "EnderecosLike", parametros);
+                    break;
+                case "CIDADE":
+                    pAtributo = "end_cidade";
+                    parametros.put("pAtributo", pAtributo);
+                    parametros.put("pDado", pDado);
+                    g.configuraRelatorio(visualizar, "EnderecosLike", parametros);
+                    break;
+                case "NUMERO":
+                    pAtributo = "end_numero";
+                    parametros.put("pAtributo", pAtributo);
+                    parametros.put("pDado", pDado);
+                    g.configuraRelatorio(visualizar, "Enderecos", parametros);
+                    break;
+                case "CEP":
+                    pAtributo = "end_cep";
+                    parametros.put("pAtributo", pAtributo);
+                    parametros.put("pDado", pDado);
+                    g.configuraRelatorio(visualizar, "EnderecosLike", parametros);
+                    break;
+                case "COMPLEMENTO":
+                    pAtributo = "end_complemento";
+                    parametros.put("pAtributo", pAtributo);
+                    parametros.put("pDado", pDado);
+                    g.configuraRelatorio(visualizar, "EnderecosLike", parametros);
+                    break;
+            }
+            
+        } catch (SQLException|FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    // Abre o relatorio na tela ou gera o pdf do mesmo
+    private void RelatorioGrafico(boolean visualizar) {
+        
+        try {
+            
+            GerenciaRelatorio g = new GerenciaRelatorio();
+            
+            // Qual campo do BD vai ser pesquisado
+            String pAtributo = null;
+            
+            // Dado que foi pesquisado que esta no text
+            String pDado = textDado.getText();
+            
+            // Hash contendo o campo pesquisado pelo valor pesquisado 
+            HashMap<String, Object> parametros = new HashMap<String, Object>();
+            
+            parametros.put("pAtributo", "Nulo");
+            parametros.put("pDado", "Nulo");
+            g.configuraRelatorio(visualizar, "EnderecosGrafico", parametros);
+            
+        } catch (SQLException|FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }
     
     @SuppressWarnings("unchecked")
@@ -81,6 +187,7 @@ public class EnderecoPesquisa extends javax.swing.JFrame {
         buttonVisualizarRelatorio = new javax.swing.JButton();
         buttonImprimirRelatorio = new javax.swing.JButton();
         buttonSair = new javax.swing.JButton();
+        checkBoxGraficoCidade = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Pesquisa de Endereço");
@@ -180,12 +287,16 @@ public class EnderecoPesquisa extends javax.swing.JFrame {
             }
         });
 
+        checkBoxGraficoCidade.setText("Gráfico Cidade");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(0, 136, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(checkBoxGraficoCidade)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(buttonImprimirRelatorio)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buttonVisualizarRelatorio)
@@ -198,7 +309,8 @@ public class EnderecoPesquisa extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(buttonSair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(buttonVisualizarRelatorio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(buttonImprimirRelatorio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(buttonImprimirRelatorio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(checkBoxGraficoCidade))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -235,30 +347,20 @@ public class EnderecoPesquisa extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonSairActionPerformed
 
     private void buttonVisualizarRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonVisualizarRelatorioActionPerformed
-        
-        try {
-            
-            GerenciaRelatorio g = new GerenciaRelatorio();
-            g.configuraRelatorio(true, "Enderecos");
-            
-        } catch (SQLException|FileNotFoundException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        if (!checkBoxGraficoCidade.isSelected()) {
+            // Abre o relatorio na tela ou gera o pdf do mesmo
+            Relatorio(true);
+        } else {
+            RelatorioGrafico(true);
         }
     }//GEN-LAST:event_buttonVisualizarRelatorioActionPerformed
 
     private void buttonImprimirRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonImprimirRelatorioActionPerformed
-        
-        try {
-            
-            GerenciaRelatorio g = new GerenciaRelatorio();
-            g.configuraRelatorio(false, "Enderecos");
-            
-        } catch (SQLException|FileNotFoundException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        if (!checkBoxGraficoCidade.isSelected()) {
+            // Abre o relatorio na tela ou gera o pdf do mesmo
+            Relatorio(false);
+        } else {
+            RelatorioGrafico(false);
         }
     }//GEN-LAST:event_buttonImprimirRelatorioActionPerformed
 
@@ -268,6 +370,7 @@ public class EnderecoPesquisa extends javax.swing.JFrame {
     private javax.swing.JButton buttonPesquisar;
     private javax.swing.JButton buttonSair;
     private javax.swing.JButton buttonVisualizarRelatorio;
+    private javax.swing.JCheckBox checkBoxGraficoCidade;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

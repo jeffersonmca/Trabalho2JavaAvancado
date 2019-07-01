@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Teste" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d524ced3-e420-472f-b4f8-6935afad14bc">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="pSistema" class="java.lang.String"/>
+	<parameter name="pImagem" class="java.lang.String"/>
+	<parameter name="pNomeRelatorio" class="java.lang.String"/>
+	<parameter name="pAtributo" class="java.lang.String"/>
+	<parameter name="pDado" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT *
+FROM `AgendaClinica`.`ENDERECO`
+WHERE $P!{pAtributo} = $P{pDado}]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="86" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="4" width="80" height="82" uuid="7aa25d85-7e7b-4d2b-888c-191a886c1402"/>
+				<imageExpression><![CDATA[$P{pImagem}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="120" y="10" width="330" height="30" uuid="07373eca-c443-4db3-92f8-2be6294dce12"/>
+				<textElement textAlignment="Center">
+					<font size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{pSistema}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="469" y="4" width="100" height="16" uuid="88ae55a8-a0b8-496c-bcf9-26d68b65fe74"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="466" y="60" width="104" height="19" uuid="e8a1882a-0623-42b9-a673-452f75df1068"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="187" y="52" width="216" height="16" uuid="bc857b37-d7e7-42fd-ba47-087ab4f964ff"/>
+				<textFieldExpression><![CDATA["Listagem de " + $P{pNomeRelatorio}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="85" splitType="Stretch">
+			<staticText>
+				<reportElement x="5" y="4" width="40" height="16" uuid="c8ce56b6-aa97-4f9d-b448-3c6c3f0188de"/>
+				<text><![CDATA[Código]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="86" y="5" width="40" height="15" uuid="59deb531-366f-441d-aa48-c93b26c44c23"/>
+				<text><![CDATA[Nome]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="46" width="70" height="20" uuid="eedf39db-a7a2-41ce-9141-d8582bba5fc4"/>
+				<text><![CDATA[Capacidade]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="86" y="47" width="70" height="20" uuid="a9efdb8d-0ba2-4279-9cdb-70104b3a1317"/>
+				<text><![CDATA[Localização]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="385" y="4" width="80" height="16" uuid="dafeabe3-528f-4f03-9913-b9318b3297cc"/>
+				<text><![CDATA[Tipo Ambiente]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="5" y="20" width="75" height="18" uuid="f69d7715-0294-4e6d-ad68-56f58c4991a1"/>
+			</textField>
+			<textField>
+				<reportElement x="86" y="20" width="292" height="19" uuid="f83dee5e-715f-492e-8cbd-52987a081ec6"/>
+			</textField>
+			<textField>
+				<reportElement x="5" y="66" width="75" height="16" uuid="7530c5ce-d3ee-45f8-a70d-bc4fc8bbc683"/>
+			</textField>
+			<textField>
+				<reportElement x="86" y="67" width="483" height="15" uuid="e00b6098-773c-412f-ae8f-3d6a0692b729"/>
+			</textField>
+			<textField>
+				<reportElement x="385" y="20" width="184" height="18" uuid="05671615-c922-4a58-8881-a53c2a469b8a"/>
+			</textField>
+			<line>
+				<reportElement x="0" y="84" width="570" height="1" uuid="d7e2d87a-c255-4cb7-98bf-5bb6529a64eb">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+		</band>
+	</detail>
+</jasperReport>
